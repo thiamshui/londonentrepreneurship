@@ -14,15 +14,18 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		TabHost tabs  = (TabHost) findViewById(android.R.id.tabhost);
 		tabs.setup();
+		
 		TabSpec specs = tabs.newTabSpec("tag1");
 		specs.setContent(R.id.featured);
 		specs.setIndicator("Featured");
 		tabs.addTab(specs);
-		specs = tabs.newTabSpec("tag1");
+		
+		specs = tabs.newTabSpec("tag2");
 		specs.setContent(R.id.latest);
 		specs.setIndicator("Latest");
 		tabs.addTab(specs);
-		specs = tabs.newTabSpec("tag1");
+		
+		specs = tabs.newTabSpec("tag3");
 		specs.setContent(R.id.categories);
 		specs.setIndicator("Categores");
 		tabs.addTab(specs);

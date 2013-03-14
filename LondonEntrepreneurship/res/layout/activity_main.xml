@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <TabHost
         android:id="@android:id/tabhost"
@@ -81,40 +81,103 @@
         android:layout_marginTop="10dp" >
 
         <LinearLayout
-            android:layout_width="164dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
+            
+           <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal"> 
+                
+              <VideoView
+                 android:id="@+id/videoView2"
+                 android:layout_width="116dp"
+                 android:layout_height="64dp"
+                 android:layout_below="@+id/videoView1"
+                 android:layout_marginLeft="22dp"
+                 android:layout_marginTop = "10dp"/>
 
-        <VideoView
-            android:id="@+id/videoView2"
-            android:layout_width="116dp"
-            android:layout_height="64dp"
-            android:layout_below="@+id/videoView1"
-            android:layout_marginLeft="22dp"
-            android:layout_marginTop = "10dp"/>
-        
-        <VideoView
-            android:id="@+id/videoView3"
-            android:layout_width="116dp"
-            android:layout_height="68dp"
-            android:layout_marginLeft="22dp"
-            android:layout_marginTop="10dp" />
-        
-        <VideoView
-            android:id="@+id/videoView4"
-            android:layout_width="116dp"
-            android:layout_height="64dp"
-            android:layout_below="@+id/videoView3"
-            android:layout_marginTop = "10dp"
-            android:layout_marginLeft="22dp" />
-        
-        <VideoView
-            android:id="@+id/videoView5"
-            android:layout_width="116dp"
-            android:layout_height="64dp"
-            android:layout_below="@+id/videoView4"
-            android:layout_marginTop = "10dp"
-            android:layout_marginLeft="22dp" />
+              <TextView
+                  android:id="@+id/textView1"
+                  android:layout_width="139dp"
+                  android:layout_height="52dp"
+                  android:layout_marginLeft="10dp"
+                  android:layout_marginTop = "10dp"
+                  android:text="Video One Title" />
+                  
+                 </LinearLayout>
+                 <View
+                  android:layout_marginTop = "5dp"   
+                  android:layout_width="fill_parent"
+                  android:layout_height="1dip"
+                  android:background="#D3D3D3" />
+            <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:orientation="horizontal">   
+               <VideoView
+                 android:id="@+id/videoView3"
+                 android:layout_width="116dp"
+                 android:layout_height="68dp"
+                 android:layout_marginLeft="22dp"
+                 android:layout_marginTop="10dp" />
+               <TextView
+                  android:id="@+id/textView2"
+                  android:layout_width="139dp"
+                  android:layout_height="52dp"
+                  android:layout_marginLeft="10dp"
+                  android:layout_marginTop = "10dp"
+                  android:text="Video Two Title" />
+            </LinearLayout>
+            <View
+                  android:layout_marginTop = "5dp"   
+                  android:layout_width="fill_parent"
+                  android:layout_height="1dip"
+                  android:background="#D3D3D3" />
+            <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:orientation="horizontal"> 
+              <VideoView
+                 android:id="@+id/videoView4"
+                 android:layout_width="116dp"
+                 android:layout_height="64dp"
+                 android:layout_below="@+id/videoView3"
+                 android:layout_marginTop = "10dp"
+                 android:layout_marginLeft="22dp" />
+              <TextView
+                  android:id="@+id/textView3"
+                  android:layout_width="139dp"
+                  android:layout_height="52dp"
+                  android:layout_marginLeft="10dp"
+                  android:layout_marginTop = "10dp"
+                  android:text="Video Three Title" />
+            </LinearLayout>
+            <View
+                  android:layout_marginTop = "5dp"   
+                  android:layout_width="fill_parent"
+                  android:layout_height="1dip"
+                  android:background="#D3D3D3" />
+            <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:orientation="horizontal"> 
+            <VideoView
+                 android:id="@+id/videoView5"
+                 android:layout_width="116dp"
+                 android:layout_height="64dp"
+                 android:layout_below="@+id/videoView4"
+                 android:layout_marginTop = "10dp"
+                 android:layout_marginLeft="22dp" />
+            <TextView
+                  android:id="@+id/textView4"
+                  android:layout_width="139dp"
+                  android:layout_height="52dp"
+                  android:layout_marginLeft="10dp"
+                  android:layout_marginTop = "10dp"
+                  android:text="Video Four Title" />
+            </LinearLayout>
         </LinearLayout>
                
     </ScrollView>
