@@ -26,6 +26,8 @@ public class MainActivity extends Activity {
 		specs.setContent(R.id.categories);
 		specs.setIndicator("Categores");
 		tabs.addTab(specs);
+		
+		//commit
 	}
 
 	@Override
