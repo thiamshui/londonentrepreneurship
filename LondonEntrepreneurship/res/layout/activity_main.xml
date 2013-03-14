@@ -1,6 +1,122 @@
-<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" />
+    tools:context=".MainActivity" >
+
+    <TabHost
+        android:id="@android:id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <LinearLayout
+                    android:id="@+id/featured"
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp" >
+
+                    <TabWidget
+                        android:id="@android:id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+                    </TabWidget>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/latest"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                </LinearLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+    </TabHost>
+
+    <SearchView
+        android:id="@+id/searchView1"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="63dp" >
+    </SearchView>
+
+    <VideoView
+        android:id="@+id/videoView1"
+        android:layout_width="wrap_content"
+        android:layout_height="170dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/searchView1"
+        android:layout_marginLeft="22dp" 
+        android:layout_marginRight="22dp" 
+        android:layout_marginTop="22dp" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/videoView1"
+        android:layout_marginTop="10dp" >
+
+        <LinearLayout
+            android:layout_width="164dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+        <VideoView
+            android:id="@+id/videoView2"
+            android:layout_width="116dp"
+            android:layout_height="64dp"
+            android:layout_below="@+id/videoView1"
+            android:layout_marginLeft="22dp"
+            android:layout_marginTop = "10dp"/>
+        
+        <VideoView
+            android:id="@+id/videoView3"
+            android:layout_width="116dp"
+            android:layout_height="68dp"
+            android:layout_marginLeft="22dp"
+            android:layout_marginTop="10dp" />
+        
+        <VideoView
+            android:id="@+id/videoView4"
+            android:layout_width="116dp"
+            android:layout_height="64dp"
+            android:layout_below="@+id/videoView3"
+            android:layout_marginTop = "10dp"
+            android:layout_marginLeft="22dp" />
+        
+        <VideoView
+            android:id="@+id/videoView5"
+            android:layout_width="116dp"
+            android:layout_height="64dp"
+            android:layout_below="@+id/videoView4"
+            android:layout_marginTop = "10dp"
+            android:layout_marginLeft="22dp" />
+        </LinearLayout>
+               
+    </ScrollView>
+    
+</RelativeLayout>
