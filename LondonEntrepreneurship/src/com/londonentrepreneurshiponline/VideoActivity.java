@@ -15,7 +15,6 @@ public class VideoActivity extends Activity {
 		setContentView(R.layout.activity_video);
 		VideoView vid = (VideoView) findViewById(R.id.videoView1);
 		MediaController mc = new MediaController(this);
-		mc.setAnchorView(vid);
 		mc.setMediaPlayer(vid);
 		vid.setVideoURI(Uri.parse("http://www.londonentrepreneurshiponline.com/stream/yqqgv4v0snfohqsj.mp4"));
 		vid.setMediaController(mc);
