@@ -29,13 +29,13 @@ public final class R {
         public static final int featured=0x7f080000;
         public static final int latest=0x7f080001;
         public static final int menu_settings=0x7f08000e;
-        public static final int scrollView1=0x7f080005;
+        public static final int scrollView1=0x7f080004;
         public static final int searchView1=0x7f080003;
         public static final int textView1=0x7f080007;
         public static final int textView2=0x7f080009;
         public static final int textView3=0x7f08000b;
         public static final int textView4=0x7f08000d;
-        public static final int videoView1=0x7f080004;
+        public static final int videoView1=0x7f080005;
         public static final int videoView2=0x7f080006;
         public static final int videoView3=0x7f080008;
         public static final int videoView4=0x7f08000a;
