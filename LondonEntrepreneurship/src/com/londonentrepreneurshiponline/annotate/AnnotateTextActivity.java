@@ -1,12 +1,10 @@
 package com.londonentrepreneurshiponline.annotate;
 
-import com.londonentrepreneurshiponline.R;
-import com.londonentrepreneurshiponline.R.layout;
-import com.londonentrepreneurshiponline.R.menu;
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
+
+import com.londonentrepreneurshiponline.R;
 
 public class AnnotateTextActivity extends Activity {
 
