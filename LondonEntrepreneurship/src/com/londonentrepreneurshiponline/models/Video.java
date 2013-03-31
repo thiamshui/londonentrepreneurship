@@ -83,10 +83,4 @@ public class Video {
 		}
 		return videos;
 	}
-	
-	public static void main(String args[])
-	{
-		//Video.getAllVideos();
-	}
-
 }
