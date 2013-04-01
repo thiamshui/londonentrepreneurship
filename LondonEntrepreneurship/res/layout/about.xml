@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView 
+        android:text="Welcome to the London Entrepreneurship video annotation tool.\n\nThis interactive application allows you to annotate videos for research, teaching or learning. Our android application provides UCL university students to bring together their individual perspectives and annotations on these pre-recorded collection of lectures.\nOur aim is to evolve the notion of sharing annotated videos for the sake of knowledge and education.\n\nTeamJNT"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/textView1"
+        ></TextView>
+
+</LinearLayout>
