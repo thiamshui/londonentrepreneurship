@@ -1,5 +1,7 @@
 package com.londonentrepreneurshiponline;
 
+import com.londonentrepreneurshiponline.models.Video;
+
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,13 +15,18 @@ public class VideoActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_video);
-		VideoView vid = (VideoView) findViewById(R.id.videoView1);
+		VideoView vv = (VideoView) findViewById(R.id.videoView1);
 		MediaController mc = new MediaController(this);
-		mc.setMediaPlayer(vid);
-		vid.setVideoURI(Uri.parse("http://www.londonentrepreneurshiponline.com/stream/yqqgv4v0snfohqsj.mp4"));
-		vid.setMediaController(mc);
+		mc.setMediaPlayer(vv);
 		
-		vid.start();
+		Video vid = Video.getVideoById(1);
+		
+		vv.setVideoURI(Uri.parse(vid.getUri()));
+		vv.setMediaController(mc);
+		
+		vv.start();
+		
+		
 	}
 
 	@Override
