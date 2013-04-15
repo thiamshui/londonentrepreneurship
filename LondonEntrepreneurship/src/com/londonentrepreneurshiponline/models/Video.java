@@ -71,7 +71,7 @@ public class Video {
 		this.thumbnail = thumbnail;
 	}
 
-	/*public String getVideobyID(int id, String key)
+	public String getVideoValue(int id, String key)
 	{
 		getAllVideos();	
 		String title = null;
@@ -85,7 +85,7 @@ public class Video {
 			}   
 	    }
 		return null;
-	}*/
+	}
 	
 	/* deserialize video collection
 	 * Reference: https://sites.google.com/site/gson/gson-user-guide#TOC-Collections-Examples
@@ -125,7 +125,6 @@ public class Video {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		    
-	    return (Video) gson.fromJson(jsonString, Video.class);
-		
+	    return (Video) gson.fromJson(jsonString, Video.class);		
 	}
 }

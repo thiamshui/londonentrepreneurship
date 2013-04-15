@@ -39,21 +39,21 @@ public class MainActivity extends Activity {
 		VideoView vid = (VideoView) findViewById(R.id.videoView1);
 		MediaController mc = new MediaController(this);
 		mc.setMediaPlayer(vid);
-		vid.setVideoURI(Uri.parse(videoObj.getVideobyID(1, "uri")));
+		vid.setVideoURI(Uri.parse(videoObj.getVideoValue(1, "uri")));
         vid.setMediaController(mc);
         vid.start();
         
         TextView textview = (TextView) findViewById(R.id.textView1);        
-		textview.setText(videoObj.getVideobyID(2, "title"));		
+		textview.setText(videoObj.getVideoValue(2, "title"));		
 		VideoView video1 = (VideoView) findViewById(R.id.videoView2);
-		video1.setVideoURI(Uri.parse(videoObj.getVideobyID(2, "uri"))); 
+		video1.setVideoURI(Uri.parse(videoObj.getVideoValue(2, "uri"))); 
 		MediaController mc1 = new MediaController(this);
 		mc1.setMediaPlayer(video1);
 		video1.setMediaController(mc1);
         video1.start();
 		
 		TextView textview1 = (TextView) findViewById(R.id.textView2);        
-		textview1.setText(videoObj.getVideobyID(3, "title"));		
+		textview1.setText(videoObj.getVideoValue(3, "title"));		
   
 	}
 
