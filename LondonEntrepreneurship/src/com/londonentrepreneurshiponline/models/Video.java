@@ -71,29 +71,8 @@ public class Video {
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
 	}
-
-<<<<<<< HEAD
-	public String getVideoValue(int id, String key)
-	{
-		getAllVideos();	
-		String title = null;
-		for (Map<String,String> m : videos)
-	    {
-			String getId = m.get("ID");
-			if(getId.equals(String.valueOf(id)))
-			{
-	           title = m.get(key);
-			   return title;
-			}   
-	    }
-		return null;
-	}
 	
 	/* deserialize video collection
-=======
-	/*
-	 * deserialize video collection
->>>>>>> branch 'master' of https://github.com/thiamshui/londonentrepreneurship.git
 	 * Reference: https://sites.google.com/site/gson/gson-user-guide#TOC-Collections-Examples
 	 */
 	public static ArrayList<Video> getAllVideos()
@@ -118,19 +97,6 @@ public class Video {
 
 		jsonString = WSClient.httpGET("http://comp1008.thiamshui.net/video.php?id="	+ id);
 		
-<<<<<<< HEAD
-		try {
-			jsonString = WSClient.readJsonFromUrl("http://comp1008.thiamshui.net/video.php?id=" + id);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		    
-	    return (Video) gson.fromJson(jsonString, Video.class);		
-=======
 		return (Video) gson.fromJson(jsonString, Video.class);
->>>>>>> branch 'master' of https://github.com/thiamshui/londonentrepreneurship.git
 	}
 }
