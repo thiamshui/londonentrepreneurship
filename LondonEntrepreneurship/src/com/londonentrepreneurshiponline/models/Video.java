@@ -6,6 +6,8 @@ package com.londonentrepreneurshiponline.models;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -96,7 +98,7 @@ public class Video {
 		Gson gson = gsonb.create();
 
 		jsonString = WSClient.httpGET("http://comp1008.thiamshui.net/video.php?id="	+ id);
-		
+		Log.d("test",jsonString);
 		return (Video) gson.fromJson(jsonString, Video.class);
 	}
 }
