@@ -10,7 +10,7 @@
 
     <VideoView
         android:id="@+id/videoView1"
-        android:layout_width="300dp"
+        android:layout_width="320dp"
         android:layout_height="184dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
@@ -54,15 +54,6 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button1"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/videoView1"
-        android:layout_centerVertical="true"
-        android:text="Annotate" />
-
-    <Button
         android:id="@+id/button2"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
@@ -70,24 +61,6 @@
         android:layout_alignTop="@+id/button1"
         android:layout_toRightOf="@+id/button1"
         android:text="Share" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_below="@+id/button1"
-        android:text="Richard Reed from Innocent"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/textView2"
-        android:text="Entrepreneurship Guest Lecture Series October 14th 2010 featuring Richard Reed from Innocent. Richard talks about how he first set up his company with his friends and became a successful and ethical business."
-        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Button
         android:id="@+id/button3"
@@ -97,5 +70,41 @@
         android:layout_alignTop="@+id/button2"
         android:layout_toRightOf="@+id/button2"
         android:text="Heat Map" />
+
+    <SeekBar
+        android:id="@+id/seekBar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/videoView1" />
+
+    <Button
+        android:id="@+id/button1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/seekBar1"
+        android:layout_below="@+id/seekBar1"
+        android:text="Annotate" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/linearLayout1"
+        android:layout_below="@+id/textView2"
+        android:text="Entrepreneurship Guest Lecture Series October 14th 2010 featuring Richard Reed from Innocent. Richard talks about how he first set up his company with his friends and became a successful and ethical business."
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_below="@+id/button2"
+        android:layout_marginTop="22dp"
+        android:text="Richard Reed from Innocent"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
