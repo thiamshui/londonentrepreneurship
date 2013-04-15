@@ -1,36 +1,35 @@
 package com.londonentrepreneurshiponline.utils;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
 
-import org.json.JSONException;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 public class WSClient {
 		
 	// Reference: http://www.vogella.com/articles/ApacheHttpClient/article.html
-	
-	public static String readAll(Reader rd) throws IOException {
-	    StringBuilder sb = new StringBuilder();
-	    int cp;
-	    while ((cp = rd.read()) != -1) {
-	      sb.append((char) cp);
-	    }
-	    return sb.toString();
-	}
+	public static String httpGET(String url)
+	{
+		HttpClient client = new DefaultHttpClient();
+		HttpGet request = new HttpGet(url);
+		String result = "";
+		try
+		{
+			HttpResponse response = client.execute(request);
 
-	public static String readJsonFromUrl(String url) throws IOException, JSONException{
-		BufferedReader rd = null;
-     	URL url1 = new URL(url);
-		try {
-		   rd = new BufferedReader(new InputStreamReader(url1.openStream()));
-		   String jsonText = readAll(rd);
-		   return jsonText;
-        }finally {
-		  rd.close();
-        }
+			String input = "";
+			BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+			while((input = rd.readLine()) != null)
+				result += input;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }
