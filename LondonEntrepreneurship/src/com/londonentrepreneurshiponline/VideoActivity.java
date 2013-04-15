@@ -6,6 +6,7 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.MediaController;
 import android.widget.SeekBar;
@@ -24,10 +25,11 @@ public class VideoActivity extends Activity implements SeekBar.OnSeekBarChangeLi
 		vv = (VideoView) findViewById(R.id.videoView1);
 		MediaController mc = new MediaController(this);
 		mc.setMediaPlayer(vv);
+		vv.setOnPreparedListener(this);
 		
 		seekbar = (SeekBar) findViewById(R.id.seekBar1);
 		seekbar.setOnSeekBarChangeListener(this);
-		
+		vv.setMediaController(mc);
 		new loadVideoTask().execute(1);
 	}
 	
