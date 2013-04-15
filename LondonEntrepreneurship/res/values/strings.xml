@@ -11,5 +11,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_video">VideoActivity</string>
     <string name="title_activity_annotate_text">AnnotateTextActivity</string>
+    <string name="title_activity_heatmap">Heatmap</string>
+    <string name="str_btn_chart">Heatmap chart</string>
 
 </resources>
