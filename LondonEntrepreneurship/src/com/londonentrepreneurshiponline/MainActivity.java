@@ -1,14 +1,20 @@
 package com.londonentrepreneurshiponline;
 
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
@@ -16,6 +22,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.londonentrepreneurshiponline.models.Video;
+import com.londonentrepreneurshiponline.utils.LoadImage;
 
 public class MainActivity extends Activity {
 
@@ -27,32 +34,26 @@ public class MainActivity extends Activity {
 		if (android.os.Build.VERSION.SDK_INT > 9) {
 		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		    StrictMode.setThreadPolicy(policy);
-		}
-		
+		}		
 		setContentView(R.layout.activity_main);
 		setTabLayout();
 		
 		ArrayList<Video> videos = Video.getAllVideos();
-		VideoView vid = (VideoView) findViewById(R.id.videoView1);
-		MediaController mc = new MediaController(this);
-		mc.setMediaPlayer(vid);
-		vid.setVideoURI(Uri.parse(videos.get(1).getUri()));
-        vid.setMediaController(mc);
-        vid.start();
-        
-        TextView textview = (TextView) findViewById(R.id.textView1);        
-		textview.setText(videos.get(2).getTitle());		
-		VideoView video1 = (VideoView) findViewById(R.id.videoView2);
-		video1.setVideoURI(Uri.parse(videos.get(2).getUri())); 
-		MediaController mc1 = new MediaController(this);
-		mc1.setMediaPlayer(video1);
-		video1.setMediaController(mc1);
-        video1.start();
+		int[] imageId = {R.id.imageView1,R.id.imageView2,R.id.imageView3,R.id.imageView4};
+		int[] textId = {R.id.textView1,R.id.textView2,R.id.textView3,R.id.textView4};
+		ImageView[] images = new ImageView[imageId.length];
 		
-		TextView textview1 = (TextView) findViewById(R.id.textView2);        
-		textview1.setText(videos.get(3).getTitle());		
-  
+		for(int i = 0; i <= imageId.length-1; i++){	
+		   images[i] = (ImageView) findViewById(imageId[i]);
+		   Drawable drawable = LoadImage.LoadImageFromWebOperations(videos.get(i+1).getThumbnail());
+           images[i].setImageDrawable(drawable);
+           TextView textview = (TextView) findViewById(textId[i]);        
+      	   textview.setText(videos.get(i+1).getTitle());	
+		}  	
+		
+		
 	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
