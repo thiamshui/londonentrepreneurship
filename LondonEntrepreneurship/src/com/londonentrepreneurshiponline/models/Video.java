@@ -85,7 +85,6 @@ public class Video {
 		Type vidCollection = new TypeToken<ArrayList<Video>>() {}.getType();
 		ArrayList<Video> videos = null;
 
-		
 		String json = WSClient.httpGET("http://comp1008.thiamshui.net/video.php");
 		videos = gson.fromJson(json, vidCollection);
 		
