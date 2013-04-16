@@ -37,7 +37,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		}		
 		setContentView(R.layout.activity_main);
 		setTabLayout();
-		videos = Video.getAllVideos();
+		videos = Video.getLatestVideos();
 		
 		int[] imageId = {R.id.imageView1,R.id.imageView2,R.id.imageView3,R.id.imageView4,R.id.imageView5};
 		int[] textId = {R.id.textView1,R.id.textView2,R.id.textView3,R.id.textView4,R.id.textView5};

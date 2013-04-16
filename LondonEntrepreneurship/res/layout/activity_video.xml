@@ -49,13 +49,6 @@
         android:layout_toRightOf="@+id/button2"
         android:text="Heat Map" />
 
-    <SeekBar
-        android:id="@+id/seekBar1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/fragment1" />
-
     <Button
         android:id="@+id/button1"
         style="?android:attr/buttonStyleSmall"
