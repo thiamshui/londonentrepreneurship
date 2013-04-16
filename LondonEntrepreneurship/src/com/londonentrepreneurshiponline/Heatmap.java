@@ -40,7 +40,7 @@ public class Heatmap extends Activity {
             }
         };
  
-        // Setting event click listener for the button btn_chart of the MainActivity layout
+       
         btnChart.setOnClickListener(clickListener);
 	}
 
@@ -61,9 +61,9 @@ public class Heatmap extends Activity {
             clicksSeries.add(i,clicks[i]);
         }
         
-     // Creating a dataset to hold each series
+     
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-        // Adding Income Series to the dataset
+        // Adding clicks Series to the dataset
         dataset.addSeries(clicksSeries);
 		
         XYSeriesRenderer clicksRenderer = new XYSeriesRenderer();
