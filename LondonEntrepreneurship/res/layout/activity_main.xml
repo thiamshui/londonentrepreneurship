@@ -23,24 +23,24 @@
             <FrameLayout
                 android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="2dp" >
 
                 <LinearLayout
                     android:id="@+id/featured"
                     android:layout_width="match_parent"
-                    android:layout_height="58dp" >
+                    android:layout_height="2dp" >
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/latest"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="2dp" >
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/categories"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="2dp" >
 
                 </LinearLayout>
             </FrameLayout>
@@ -48,24 +48,25 @@
         </LinearLayout>
     </TabHost>
 
-    <SearchView
-        android:id="@+id/searchView1"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="63dp" >
+ <SearchView
+     android:id="@+id/searchView1"
+     android:layout_width="wrap_content"
+     android:layout_height="40dp"
+     android:layout_below="@android:id/tabcontent"
+     android:layout_marginTop="70dp"
+     android:queryHint="Search Videos" >
+
     </SearchView>
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="600dp"
-        android:layout_height="160dp"
+        android:layout_height="140dp"
         android:layout_below="@+id/searchView1"
         android:layout_marginLeft="22dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="22dp" 
-        />
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="5dp"
+        android:scaleType="fitCenter" />
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -100,7 +101,7 @@
                    android:id="@+id/textView2"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:textSize="10sp"
+                   android:textSize="12sp"
                    android:layout_marginLeft="10dp"
                    android:layout_marginTop="10dp"
                    android:layout_marginRight = "10dp"
@@ -126,7 +127,7 @@
                   android:id="@+id/textView3"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:textSize="10sp"
+                  android:textSize="12sp"
                   android:layout_marginLeft="10dp"
                   android:layout_marginTop = "10dp"
                   android:layout_marginRight = "10dp"
@@ -153,7 +154,7 @@
                   android:id="@+id/textView4"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:textSize="10sp"
+                  android:textSize="12sp"
                   android:layout_marginLeft="10dp"
                   android:layout_marginTop = "10dp"
                   android:layout_marginRight = "10dp"
@@ -177,7 +178,7 @@
                  android:layout_marginLeft="22dp" />
             <TextView
                   android:id="@+id/textView5"
-                  android:textSize="10sp"
+                  android:textSize="12sp"
                   android:layout_width="139dp"
                   android:layout_height="52dp"
                   android:layout_marginLeft="10dp"
@@ -194,7 +195,7 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:textStyle="bold"
         android:layout_below="@+id/imageView1"
         android:layout_marginTop = "10dp"

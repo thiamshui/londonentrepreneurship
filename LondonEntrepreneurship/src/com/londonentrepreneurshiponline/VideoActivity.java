@@ -30,26 +30,26 @@ public class VideoActivity extends FragmentActivity implements SeekBar.OnSeekBar
 		}
 		setContentView(R.layout.activity_video);
 		
-		/*vv = (VideoView) findViewById(R.id.videoView1);
-		
-		
-		MediaController mc = new MediaController(this);
-		mc.setMediaPlayer(vv);
-		
-		
-		
-		seekbar = (SeekBar) findViewById(R.id.seekBar1);
-		if(seekbar != null)
-		{
-			seekbar.setOnSeekBarChangeListener(this);
-			vv.setOnPreparedListener(this);
-		}
-		vv.setMediaController(mc);
-
-		new loadVideoTask().execute(1);*/
+//		vv = (VideoView) findViewById(R.id.videoView1);
+//		
+//		
+//		MediaController mc = new MediaController(this);
+//		mc.setMediaPlayer(vv);
+//		
+//		
+//		
+//		seekbar = (SeekBar) findViewById(R.id.seekBar1);
+//		if(seekbar != null)
+//		{
+//			seekbar.setOnSeekBarChangeListener(this);
+//			vv.setOnPreparedListener(this);
+//		}
+//		vv.setMediaController(mc);
+//
+//		//new loadVideoTask().execute(1);
 
 		Intent myIntent= getIntent();
-		int id = myIntent.getIntExtra("videoId", 0);
+		int id = myIntent.getIntExtra("videoId", 1);
 		new loadVideoTask().execute(id);
 
 	}
