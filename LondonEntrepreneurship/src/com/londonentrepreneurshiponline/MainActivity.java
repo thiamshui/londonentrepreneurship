@@ -29,7 +29,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		//Unable to use network thread with ui threat on honeycomb > 3.
 		if (android.os.Build.VERSION.SDK_INT > 9) {
 		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -38,10 +38,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		setContentView(R.layout.activity_main);
 		setTabLayout();
 		videos = Video.getAllVideos();
-		
+
 		int[] imageId = {R.id.imageView1,R.id.imageView2,R.id.imageView3,R.id.imageView4,R.id.imageView5};
 		int[] textId = {R.id.textView1,R.id.textView2,R.id.textView3,R.id.textView4,R.id.textView5};
-		
+
 		for(int i = 0; i <= imageId.length-1; i++){	
 		   ImageView images = (ImageView) findViewById(imageId[i]);
 		   images.setOnClickListener(this);
@@ -51,7 +51,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
       	   textview.setText(videos.get(i).getTitle());	
 		}  			
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -63,23 +63,23 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	public void setTabLayout(){
 		TabHost tabs  = (TabHost) findViewById(android.R.id.tabhost);
 		tabs.setup();
-		
+
 		TabSpec specs = tabs.newTabSpec("tag1");
 		specs.setContent(R.id.featured);
 		specs.setIndicator("Featured");
 		tabs.addTab(specs);
-		
+
 		specs = tabs.newTabSpec("tag2");
 		specs.setContent(R.id.latest);
 		specs.setIndicator("Latest");
 		tabs.addTab(specs);
-		
+
 		specs = tabs.newTabSpec("tag3");
 		specs.setContent(R.id.categories);
 		specs.setIndicator("Categores");
 		tabs.addTab(specs);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
@@ -90,14 +90,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.help:
-			
+
 			break;
 		case R.id.preferences:
-			
+
 			break;		
 		}
 		return false;
-		
+
 	}
 
 
@@ -125,8 +125,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		Intent myIntent = new Intent(this, VideoActivity.class);
 		myIntent.putExtra("videoId", id);
 		startActivity(myIntent);
-		
+
 	}
 
-	
+
 }
