@@ -4,8 +4,9 @@ import java.io.InputStream;
 import java.net.URL;
 
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 
-public class LoadImage {
+public class LoadImage{
 
 	public static Drawable LoadImageFromWebOperations(String url)
     {

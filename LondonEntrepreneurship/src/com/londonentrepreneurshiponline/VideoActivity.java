@@ -1,5 +1,6 @@
 package com.londonentrepreneurshiponline;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
@@ -7,9 +8,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.SeekBar;
@@ -37,6 +36,8 @@ public class VideoActivity extends FragmentActivity implements SeekBar.OnSeekBar
 		MediaController mc = new MediaController(this);
 		mc.setMediaPlayer(vv);
 		
+		
+		
 		seekbar = (SeekBar) findViewById(R.id.seekBar1);
 		if(seekbar != null)
 		{
@@ -44,7 +45,13 @@ public class VideoActivity extends FragmentActivity implements SeekBar.OnSeekBar
 			vv.setOnPreparedListener(this);
 		}
 		vv.setMediaController(mc);
+
 		new loadVideoTask().execute(1);*/
+
+		Intent myIntent= getIntent();
+		int id = myIntent.getIntExtra("videoId", 0);
+		new loadVideoTask().execute(id);
+
 	}
 	
 	@Override
