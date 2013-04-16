@@ -104,13 +104,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	@Override
 	public void onClick(View v) {
 		int id = 0;
-		String str = String.valueOf(videos.get(2).getId());
-		
-		Log.d("HELLOOOO", str);
 		// TODO Auto-generated method stub
 		switch(v.getId()){
 		case R.id.imageView1:
-			id = 1;
+			id = videos.get(0).getId();;
 			break;
 		case R.id.imageView2:
 			id = videos.get(1).getId();

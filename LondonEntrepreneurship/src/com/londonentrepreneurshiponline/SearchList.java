@@ -1,7 +1,10 @@
 package com.londonentrepreneurshiponline;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -15,6 +18,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -32,9 +39,10 @@ import android.widget.TextView;
 import android.view.View;
 
 public class SearchList extends Activity implements View.OnClickListener {
-    public Drawable drawable;
-	public ArrayList<Video> videos = Video.getAllVideos();
-
+    private Drawable drawable;
+	private ArrayList<Video> videos;
+	ImageView rowImages;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){	
 		super.onCreate(savedInstanceState);
@@ -44,9 +52,8 @@ public class SearchList extends Activity implements View.OnClickListener {
 		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		    StrictMode.setThreadPolicy(policy);
 	}	
-		
-		
-	
+		videos = Video.getAllVideos();
+	        
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 			    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		params.gravity = Gravity.LEFT;
@@ -65,15 +72,24 @@ public class SearchList extends Activity implements View.OnClickListener {
 		ll.setOrientation(LinearLayout.VERTICAL);
 		sv.addView(ll);
 		
+		
 		for(int i = 0; i<= videos.size()-1; i++){
 		  LinearLayout row = new LinearLayout(this);
           row.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-			    ImageView image = new ImageView(this);
-			    image.setId(i);
-			    drawable = LoadImage.LoadImageFromWebOperations((videos.get(i).getThumbnail()));
-			    image.setImageDrawable(drawable);   
-		        image.setLayoutParams(params);
-			    row.addView(image);
+                
+  		        
+                rowImages = new ImageView(this);
+			    rowImages.setId(i);
+			    String uri = (videos.get(i).getThumbnail());
+			    rowImages.setTag(uri);
+			    drawable = LoadImage.LoadImageFromWebOperations(uri);
+			    Log.d("BACKGROUND", "before");
+			    //new DownloadImage().execute(uri);
+			    rowImages.setImageDrawable(drawable);   
+			    
+			    rowImages.setLayoutParams(params);
+			    row.addView(rowImages);
+			    rowImages.setOnClickListener(this);
 			    
 			    TextView textview = new TextView(this);        
 	      	    textview.setText(videos.get(i).getTitle());
@@ -85,27 +101,6 @@ public class SearchList extends Activity implements View.OnClickListener {
 	    this.setContentView(sv);			
 	}
 	
-	protected class loadImageTask extends AsyncTask<String,Void,InputStream>
-	{
-		@Override
-		protected InputStream doInBackground(String... params) {	
-			 try{
-			        InputStream is = (InputStream) new URL(params[0]).getContent();		        
-			        return is;
-			      }catch (Exception e) {
-			        System.out.println("Exc="+e);
-			        return null;
-			      }
-		}
-		
-		@Override
-		protected void onPostExecute(InputStream result) {
-			// TODO Auto-generated method stub
-			drawable = Drawable.createFromStream(result, "src name");		
-		}
-	
-	}
-
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -117,7 +112,63 @@ public class SearchList extends Activity implements View.OnClickListener {
 			}  
 		}
 	}
+
+	//thread method of getting image
+	private void setImage(Drawable drawable)
+	{
+	    rowImages.setImageDrawable(drawable);
+	}
+
+	protected class DownloadImage extends AsyncTask<String, Integer, Drawable> {
+
+	    @Override
+	    protected Drawable doInBackground(String... arg0) {
+	        // This is done in a background thread
+	        return downloadImage(arg0[0]);
+	    }
+
+
+	    protected void onPostExecute(Drawable image)
+	    {
+	        setImage(image);
+	    }
+
+	    
+	    private Drawable downloadImage(String _url)
+	    {
+	    	Log.d("BACKGROUND", "download");
+	        URL url;        
+	        BufferedOutputStream out;
+	        InputStream in;
+	        BufferedInputStream buf;
+            Context context = getApplicationContext();
+        
+	        try {
+	            url = new URL(_url);
+	            in = url.openStream();
+
+	            buf = new BufferedInputStream(in);
+	            Log.d("BACKGROUND", "halfway");
+	            Bitmap bMap = BitmapFactory.decodeStream(buf);
+	            if (in != null) {
+	                in.close();
+	            }
+	            if (buf != null) {
+	                buf.close();
+	            }
+  
+	            return new BitmapDrawable(context.getResources(), bMap);
+
+	        } catch (Exception e) {
+	            Log.e("Error reading file", e.toString());
+	        }
+
+	        return null;
+	    }
+
+	}
+
+
+}	
 	
 	
-	
-}

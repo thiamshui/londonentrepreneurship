@@ -6,6 +6,9 @@ package com.londonentrepreneurshiponline.models;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -18,14 +21,15 @@ import com.londonentrepreneurshiponline.utils.WSClient;
  * 
  */
 public class Video {
-
+	
 	private int id;
 	private String uri;
 	private String title;
 	private String desc;
 	private int likes;
 	private String thumbnail;
-
+	
+	
 	public int getId() {
 		return id;
 	}
