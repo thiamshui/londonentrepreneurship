@@ -2,13 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".VideoActivity" >
 
-    <VideoView
+    <fragment
+        android:id="@+id/fragment1"
+        android:name="com.londonentrepreneurshiponline.VideoFragment"
+        android:layout_width="match_parent"
+        android:layout_height="184dp" />
+    <!-- VideoView
         android:id="@+id/videoView1"
         android:layout_width="320dp"
         android:layout_height="184dp"
@@ -27,31 +28,8 @@
         android:gravity="center"
         android:text="Caption here"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/white" />
+        android:textColor="@color/white" /-->
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView3"
-        android:orientation="vertical" >
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/linearLayout1"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_below="@+id/textView3"
-        android:layout_marginLeft="22dp"
-        android:layout_marginTop="60dp"
-        android:orientation="vertical" >
-
-    </LinearLayout>
 
     <Button
         android:id="@+id/button2"
@@ -76,35 +54,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/videoView1" />
+        android:layout_below="@+id/fragment1" />
 
     <Button
         android:id="@+id/button1"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/seekBar1"
-        android:layout_below="@+id/seekBar1"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:text="Annotate" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/linearLayout1"
-        android:layout_below="@+id/textView2"
-        android:text="Entrepreneurship Guest Lecture Series October 14th 2010 featuring Richard Reed from Innocent. Richard talks about how he first set up his company with his friends and became a successful and ethical business."
-        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView3"
+        android:layout_alignRight="@+id/button3"
         android:layout_below="@+id/button2"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="16dp"
         android:text="Richard Reed from Innocent"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:text="Entrepreneurship Guest Lecture Series October 14th 2010 featuring Richard Reed from Innocent. Richard talks about how he first set up his company with his friends and became a successful and ethical business."
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

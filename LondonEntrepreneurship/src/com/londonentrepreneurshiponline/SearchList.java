@@ -52,7 +52,7 @@ public class SearchList extends Activity implements View.OnClickListener {
 		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		    StrictMode.setThreadPolicy(policy);
 	}	
-		videos = Video.getAllVideos();
+		videos = Video.searchVideos("Richard");
 	        
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 			    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);

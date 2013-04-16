@@ -1,41 +1,66 @@
 package com.londonentrepreneurshiponline;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
-import android.widget.MediaController;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.VideoView;
 
 import com.londonentrepreneurshiponline.models.Video;
 
-public class VideoActivity extends Activity implements SeekBar.OnSeekBarChangeListener,OnPreparedListener {
-  
+public class VideoActivity extends FragmentActivity implements SeekBar.OnSeekBarChangeListener,OnPreparedListener {
+
 	private VideoView vv;
 	private SeekBar seekbar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+		{
+			requestWindowFeature(Window.FEATURE_NO_TITLE);
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
 		setContentView(R.layout.activity_video);
-		vv = (VideoView) findViewById(R.id.videoView1);
+		
+		/*vv = (VideoView) findViewById(R.id.videoView1);
+		
+		
 		MediaController mc = new MediaController(this);
 		mc.setMediaPlayer(vv);
-		vv.setOnPreparedListener(this);
 		
-		Intent myIntent= getIntent();
-		int id = myIntent.getIntExtra("videoId", 0);
+		
 		
 		seekbar = (SeekBar) findViewById(R.id.seekBar1);
-		seekbar.setOnSeekBarChangeListener(this);
+		if(seekbar != null)
+		{
+			seekbar.setOnSeekBarChangeListener(this);
+			vv.setOnPreparedListener(this);
+		}
 		vv.setMediaController(mc);
+
+		new loadVideoTask().execute(1);*/
+
+		Intent myIntent= getIntent();
+		int id = myIntent.getIntExtra("videoId", 0);
 		new loadVideoTask().execute(id);
+
 	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		// TODO Auto-generated method stub
+		super.onConfigurationChanged(newConfig);
+		//setContentView(R.layout.activity_video);
+	}
+	
 	
 	@Override
 	public void onPrepared(MediaPlayer mp) {
@@ -81,6 +106,12 @@ public class VideoActivity extends Activity implements SeekBar.OnSeekBarChangeLi
 	public void onStopTrackingTouch(SeekBar seekBar) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
 	}
 	
 	protected class loadVideoTask extends AsyncTask<Integer,Void,Video>
