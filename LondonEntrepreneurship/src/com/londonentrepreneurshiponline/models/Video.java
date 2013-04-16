@@ -98,6 +98,7 @@ public class Video {
 		Gson gson = gsonb.create();
 
 		jsonString = WSClient.httpGET("http://comp1008.thiamshui.net/video.php?id="	+ id);
+		//Log.d("test",jsonString);
 		return (Video) gson.fromJson(jsonString, Video.class);
 	}
 }
