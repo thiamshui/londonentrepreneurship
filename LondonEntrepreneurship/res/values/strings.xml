@@ -13,5 +13,6 @@
     <string name="title_activity_annotate_text">AnnotateTextActivity</string>
     <string name="title_activity_heatmap">Heatmap</string>
     <string name="str_btn_chart">Heatmap chart</string>
+    <string name="title_activity_login">Login</string>
 
 </resources>
