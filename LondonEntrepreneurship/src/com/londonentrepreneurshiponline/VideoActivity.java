@@ -1,6 +1,7 @@
 package com.londonentrepreneurshiponline;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
@@ -15,7 +16,7 @@ import android.widget.VideoView;
 import com.londonentrepreneurshiponline.models.Video;
 
 public class VideoActivity extends Activity implements SeekBar.OnSeekBarChangeListener,OnPreparedListener {
-
+  
 	private VideoView vv;
 	private SeekBar seekbar;
 	@Override
@@ -27,10 +28,13 @@ public class VideoActivity extends Activity implements SeekBar.OnSeekBarChangeLi
 		mc.setMediaPlayer(vv);
 		vv.setOnPreparedListener(this);
 		
+		Intent myIntent= getIntent();
+		int id = myIntent.getIntExtra("videoId", 0);
+		
 		seekbar = (SeekBar) findViewById(R.id.seekBar1);
 		seekbar.setOnSeekBarChangeListener(this);
 		vv.setMediaController(mc);
-		new loadVideoTask().execute(1);
+		new loadVideoTask().execute(id);
 	}
 	
 	@Override

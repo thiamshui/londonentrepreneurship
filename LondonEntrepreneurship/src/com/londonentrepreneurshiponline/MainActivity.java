@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -12,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -24,8 +24,8 @@ import android.widget.VideoView;
 import com.londonentrepreneurshiponline.models.Video;
 import com.londonentrepreneurshiponline.utils.LoadImage;
 
-public class MainActivity extends Activity {
-
+public class MainActivity extends Activity implements View.OnClickListener {
+    public ArrayList<Video> videos;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,24 +37,21 @@ public class MainActivity extends Activity {
 		}		
 		setContentView(R.layout.activity_main);
 		setTabLayout();
+		videos = Video.getAllVideos();
 		
-		ArrayList<Video> videos = Video.getAllVideos();
-		int[] imageId = {R.id.imageView1,R.id.imageView2,R.id.imageView3,R.id.imageView4};
-		int[] textId = {R.id.textView1,R.id.textView2,R.id.textView3,R.id.textView4};
-		ImageView[] images = new ImageView[imageId.length];
+		int[] imageId = {R.id.imageView1,R.id.imageView2,R.id.imageView3,R.id.imageView4,R.id.imageView5};
+		int[] textId = {R.id.textView1,R.id.textView2,R.id.textView3,R.id.textView4,R.id.textView5};
 		
 		for(int i = 0; i <= imageId.length-1; i++){	
-		   images[i] = (ImageView) findViewById(imageId[i]);
-		   Drawable drawable = LoadImage.LoadImageFromWebOperations(videos.get(i+1).getThumbnail());
-           images[i].setImageDrawable(drawable);
+		   ImageView images = (ImageView) findViewById(imageId[i]);
+		   images.setOnClickListener(this);
+		   Drawable drawable = LoadImage.LoadImageFromWebOperations(videos.get(i).getThumbnail());
+           images.setImageDrawable(drawable);
            TextView textview = (TextView) findViewById(textId[i]);        
-      	   textview.setText(videos.get(i+1).getTitle());	
-		}  	
-		
-		
+      	   textview.setText(videos.get(i).getTitle());	
+		}  			
 	}
 	
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -100,6 +97,34 @@ public class MainActivity extends Activity {
 			break;		
 		}
 		return false;
+		
+	}
+
+
+	@Override
+	public void onClick(View v) {
+		int id = 0;
+		// TODO Auto-generated method stub
+		switch(v.getId()){
+		case R.id.imageView1:
+			id = videos.get(0).getId();;
+			break;
+		case R.id.imageView2:
+			id = videos.get(1).getId();
+			break;
+		case R.id.imageView3:
+			id = videos.get(2).getId();
+			break;
+		case R.id.imageView4:
+			id = videos.get(3).getId();
+			break;
+		case R.id.imageView5:
+			id = videos.get(4).getId();
+			break;
+		}
+		Intent myIntent = new Intent(this, VideoActivity.class);
+		myIntent.putExtra("videoId", id);
+		startActivity(myIntent);
 		
 	}
 
