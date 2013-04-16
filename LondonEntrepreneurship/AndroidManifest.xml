@@ -40,6 +40,22 @@
         <activity
             android:name="com.londonentrepreneurshiponline.Heatmap"
             android:label="@string/title_activity_heatmap" >
+            <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
+        </activity>
+        <activity android:name="org.achartengine.GraphicalActivity" />
+        
+        <activity
+            android:name="com.londonentrepreneurshiponline.Login"
+            android:label="@string/title_activity_login" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

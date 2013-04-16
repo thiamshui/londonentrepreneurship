@@ -15,5 +15,6 @@
     <string name="str_btn_chart">Heatmap chart</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <color name="black">#000</color>
+    <string name="title_activity_login">Login</string>
 
 </resources>
