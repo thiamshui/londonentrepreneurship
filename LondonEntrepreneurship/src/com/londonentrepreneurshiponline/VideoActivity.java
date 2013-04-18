@@ -27,13 +27,35 @@ public class VideoActivity extends FragmentActivity {
 		}
 		setContentView(R.layout.activity_video);
 		TextView title = (TextView) findViewById(R.id.textView2);
-		
-		Intent myIntent= getActivity().getIntent();
-		int id = myIntent.getIntExtra("videoId", 0);
+//		vv = (VideoView) findViewById(R.id.videoView1);
+//		
+//		
+//		MediaController mc = new MediaController(this);
+//		mc.setMediaPlayer(vv);
+//		
+//		
+//		
+//		seekbar = (SeekBar) findViewById(R.id.seekBar1);
+//		if(seekbar != null)
+//		{
+//			seekbar.setOnSeekBarChangeListener(this);
+//			vv.setOnPreparedListener(this);
+//		}
+//		vv.setMediaController(mc);
+//
+//		//new loadVideoTask().execute(1);
+
+		Intent myIntent= getIntent();
+		int id = myIntent.getIntExtra("videoId", 1);
+		new loadVideoTask().execute(id);
+
+	}
 	
-		
-	//	new loadVideoTask().execute(id);
-		
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		// TODO Auto-generated method stub
+		super.onConfigurationChanged(newConfig);
+		//setContentView(R.layout.activity_video);
 	}
 
 	@Override

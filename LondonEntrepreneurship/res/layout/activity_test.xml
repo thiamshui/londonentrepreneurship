@@ -23,4 +23,12 @@
         android:layout_marginTop="28dp"
         android:text="Button" android:onClick="runVideo" />
 
+    <SearchView
+        android:id="@+id/searchView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_centerVertical="true" >
+    </SearchView>
+
 </RelativeLayout>
