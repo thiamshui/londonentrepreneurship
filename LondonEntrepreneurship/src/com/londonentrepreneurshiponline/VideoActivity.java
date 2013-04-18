@@ -2,6 +2,7 @@ package com.londonentrepreneurshiponline;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -76,16 +77,9 @@ public class VideoActivity extends FragmentActivity {
 		@Override
 		protected void onPostExecute(Video result) {
 			// TODO Auto-generated method stub
-<<<<<<< HEAD
+
 			vv.setVideoURI(Uri.parse(result.getUri()));		
-			vv.start();
-=======
-			Log.d("test",result.getDesc());
-			//vv.setVideoURI(Uri.parse(result.getUri()));
-		
-			//vv.start();
->>>>>>> branch 'master' of https://github.com/thiamshui/londonentrepreneurship.git
-			
+			vv.start();		
 		}
 	
 	}
