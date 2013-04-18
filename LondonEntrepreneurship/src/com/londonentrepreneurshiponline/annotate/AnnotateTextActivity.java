@@ -12,12 +12,22 @@ import com.londonentrepreneurshiponline.R;
 public class AnnotateTextActivity extends Activity {
 	
 	Button saving, discarding;
+	EditText saveAnnot, annotate;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_annotate_text);
 		
+//		annotate = (EditText) findViewById(R.id.textAnnot);
+//		annotate.setOnClickListener(new View.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				annotate.setBackgroundColor(getResources().getColor(android.R.color.));
+//			}
+//		});
 		saving = (Button) findViewById(R.id.Bsave);
 		saving.setOnClickListener(new View.OnClickListener() {
 			
@@ -25,7 +35,7 @@ public class AnnotateTextActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				EditText saveAnnot = (EditText) findViewById(R.id.textAnnot);
+				saveAnnot = (EditText) findViewById(R.id.textAnnot);
 				String newAnnot = saveAnnot.getText().toString();
 			}
 		});
