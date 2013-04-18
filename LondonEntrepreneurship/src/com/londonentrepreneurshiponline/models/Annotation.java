@@ -1,7 +1,7 @@
 package com.londonentrepreneurshiponline.models;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import com.google.gson.Gson;
@@ -41,19 +41,25 @@ public class Annotation {
 		this.timeSecs = timeSecs;
 	}
 	
-	public static LinkedList<Annotation> getAnnotationsByVideo(int id)
+	public static HashMap<Integer,String> getAnnotationsByVideo(int id)
 	{
 		GsonBuilder gsonb = new GsonBuilder();
 		Gson gson = gsonb.create();
 
 		Type vidCollection = new TypeToken<LinkedList<Annotation>>() {}.getType();
 		LinkedList<Annotation> annotations = null;
-
+		HashMap<Integer,String> map = new HashMap<Integer,String>();
 		
 		String json = WSClient.httpGET("http://comp1008.thiamshui.net/annotation.php?id=" + id);
 		annotations = gson.fromJson(json, vidCollection);
 		
-		return annotations;
+		while(!annotations.isEmpty())
+		{
+			Annotation annotation = annotations.pop();
+			map.put(annotation.getTimeSecs(), annotation.getText());
+		}
+		
+		return map;
 	}
 	
 

@@ -1,9 +1,10 @@
 package com.londonentrepreneurshiponline;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -24,11 +25,13 @@ import com.londonentrepreneurshiponline.models.Video;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  * 
  */
-public class VideoFragment extends Fragment implements OnPreparedListener {
+public class VideoFragment extends Fragment implements OnPreparedListener,OnCompletionListener {
 
 	private VideoView vv;
-	private LinkedList<Annotation> annotations;
+	private HashMap<Integer,String> annotations;
 	private TextView caption;
+	private boolean videoFinished = false;
+	private int prevCaptionTime = 0;
 
 	public VideoFragment() {
 		// Required empty public constructor
@@ -49,8 +52,10 @@ public class VideoFragment extends Fragment implements OnPreparedListener {
 		caption = (TextView) view.findViewById(R.id.textView1);
 		MediaController mc = new MediaController(view.getContext());
 		mc.setMediaPlayer(vv);
-		//vv.setOnPreparedListener(this);
 
+		vv.setOnPreparedListener(this);
+		vv.setOnCompletionListener(this);
+		
 		/*seekbar = (SeekBar) findViewById(R.id.seekBar1);
 		seekbar.setOnSeekBarChangeListener(this);*/
 		vv.setMediaController(mc);
@@ -79,7 +84,6 @@ public class VideoFragment extends Fragment implements OnPreparedListener {
 			vv.start();
 
 		}
-
 	}
 
 	@Override
@@ -88,16 +92,31 @@ public class VideoFragment extends Fragment implements OnPreparedListener {
 		vv.getCurrentPosition();
 		Handler handler = new Handler();
 		handler.postDelayed(updateAnnotations, 1000);
-
+	}
+	
+	@Override
+	public void onCompletion(MediaPlayer mp) {
+		// TODO Auto-generated method stub
+		videoFinished = true;
 	}
 
 	protected Runnable updateAnnotations = new Runnable() {
 		public void run()
 		{
-			if(vv.getCurrentPosition() == annotations.get(0).getTimeSecs())
+			int currentPos = vv.getCurrentPosition() / 1000;
+			String text = "";
+			if((text = annotations.get(currentPos)) != null)
 			{
-				caption.setText(annotations.get(0).getText());
-				annotations.remove();
+				caption.setText(text);
+				prevCaptionTime = currentPos;
+			}
+			
+			if(currentPos < prevCaptionTime || currentPos - prevCaptionTime > 5)
+				caption.setText("");
+			
+			if(!videoFinished)
+			{
+				new Handler().postDelayed(updateAnnotations, 1000);
 			}
 		}
 	};

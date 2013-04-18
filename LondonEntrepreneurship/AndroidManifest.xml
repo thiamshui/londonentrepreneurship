@@ -22,7 +22,7 @@
            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter> 
         </activity>
         <activity
             android:name="com.londonentrepreneurshiponline.AboutUs"
@@ -36,18 +36,23 @@
         <activity
             android:name="com.londonentrepreneurshiponline.SearchList"
             android:label="@string/app_name" >
+
         </activity>
         
         <activity
             android:name="com.londonentrepreneurshiponline.Heatmap"
-            android:label="@string/title_activity_heatmap" >
+            android:label="@string/app_name" >
         </activity>
         
         <activity android:name="org.achartengine.GraphicalActivity" />
         
         <activity
             android:name="com.londonentrepreneurshiponline.Login"
-            android:label="@string/title_activity_login" >
+            android:label="@string/app_name" >
+           <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 

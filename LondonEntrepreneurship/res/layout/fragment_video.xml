@@ -23,8 +23,9 @@
         android:layout_alignLeft="@+id/videoView1"
         android:layout_alignRight="@+id/videoView1"
         android:gravity="center"
-        android:text="Caption here"
+        android:text="Test"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:background="#44000000"
         android:textColor="@color/white" />
 
 </RelativeLayout>

@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
+
 import android.widget.TextView;
+
 import android.widget.VideoView;
 
 import com.londonentrepreneurshiponline.models.Video;
@@ -46,6 +48,14 @@ public class VideoActivity extends FragmentActivity implements OnPreparedListene
 		//setContentView(R.layout.activity_video);
 	}
 
+	
+	@Override
+	public void onPrepared(MediaPlayer mp) {
+		// TODO Auto-generated method stub
+		//seekbar.setMax(vv.getDuration());
+		//seekbar.postDelayed(updateSeekBar, 1000);
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -70,13 +80,6 @@ public class VideoActivity extends FragmentActivity implements OnPreparedListene
 			vv.start();		
 		}
 	
-	}
-
-
-	@Override
-	public void onPrepared(MediaPlayer arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 }
 
