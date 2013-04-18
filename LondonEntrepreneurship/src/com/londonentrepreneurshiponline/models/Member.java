@@ -40,7 +40,7 @@ public class Member {
 		GsonBuilder gsonb = new GsonBuilder();
 		Gson gson = gsonb.create();
 
-		jsonString = WSClient.httpGET("http://comp1008.thiamshui.net/member.php?username=" + username + "&password=" + password);
+		jsonString = WSClient.httpGET("http://saturn.thiamshui.net/member.php?username=" + username + "&password=" + password);
 		try
 		{
 			return (Member) gson.fromJson(jsonString, Member.class);

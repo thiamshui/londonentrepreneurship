@@ -2,23 +2,18 @@ package com.londonentrepreneurshiponline;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.londonentrepreneurshiponline.annotate.AnnotateTextActivity;
 import com.londonentrepreneurshiponline.models.Video;
 
-public class VideoActivity extends FragmentActivity implements OnPreparedListener {
+public class VideoActivity extends FragmentActivity {
 
-	private VideoView vv;
 	private boolean loggedIn = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,24 +36,6 @@ public class VideoActivity extends FragmentActivity implements OnPreparedListene
 		super.onConfigurationChanged(newConfig);
 		//setContentView(R.layout.activity_video);
 	}
-
-
-	@Override
-	public void onPrepared(MediaPlayer mp) {
-		// TODO Auto-generated method stub
-		//seekbar.setMax(vv.getDuration());
-		//seekbar.postDelayed(updateSeekBar, 1000);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.video, menu);
-		return true;
-	}
-
-
-
 
 	public void annotateText(View v)
 	{
@@ -86,6 +63,12 @@ public class VideoActivity extends FragmentActivity implements OnPreparedListene
 	public void annotateImpt(View v)
 	{
 		
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
 	}
 
 }

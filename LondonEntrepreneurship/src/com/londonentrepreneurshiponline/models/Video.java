@@ -81,16 +81,16 @@ public class Video implements Serializable{
 	 */
 	public static ArrayList<Video> getFeaturedVideos()
 	{
-		return getVideosByUrl("http://comp1008.thiamshui.net/video.php?featured");
+		return getVideosByUrl("http://saturn.thiamshui.net/video.php?featured");
 	}
 	public static ArrayList<Video> getLatestVideos()
 	{
-		return getVideosByUrl("http://comp1008.thiamshui.net/video.php?latest");
+		return getVideosByUrl("http://saturn.thiamshui.net/video.php?latest");
 	}
 	
 	public static ArrayList<Video> searchVideos(String searchStr)
 	{
-		return getVideosByUrl("http://comp1008.thiamshui.net/video.php?search=" + searchStr);
+		return getVideosByUrl("http://saturn.thiamshui.net/video.php?search=" + searchStr);
 	}
 
 	public static Video getVideoById(int id) {
@@ -98,7 +98,7 @@ public class Video implements Serializable{
 		GsonBuilder gsonb = new GsonBuilder();
 		Gson gson = gsonb.create();
 
-		jsonString = WSClient.httpGET("http://comp1008.thiamshui.net/video.php?id="	+ id);
+		jsonString = WSClient.httpGET("http://saturn.thiamshui.net/video.php?id="	+ id);
 		return (Video) gson.fromJson(jsonString, Video.class);
 	}
 	
