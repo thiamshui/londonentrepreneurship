@@ -125,8 +125,7 @@ public class VideoActivity extends FragmentActivity implements SeekBar.OnSeekBar
 		@Override
 		protected void onPostExecute(Video result) {
 			// TODO Auto-generated method stub
-			vv.setVideoURI(Uri.parse(result.getUri()));
-		
+			vv.setVideoURI(Uri.parse(result.getUri()));		
 			vv.start();
 			
 		}
