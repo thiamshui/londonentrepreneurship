@@ -28,23 +28,20 @@ public class VideoActivity extends FragmentActivity implements OnPreparedListene
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
 		setContentView(R.layout.activity_video);
-		
+
 		Video vid = (Video) getIntent().getSerializableExtra("video");
 		((TextView)findViewById(R.id.textView2)).setText(vid.getTitle());
 		((TextView)findViewById(R.id.textView3)).setText(vid.getDesc());
-		//int id = myIntent.getIntExtra("videoId", 1);
-		//new loadVideoTask().execute(id);
-
 	}
-	
+
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		// TODO Auto-generated method stub
 		super.onConfigurationChanged(newConfig);
 		//setContentView(R.layout.activity_video);
 	}
-	
-	
+
+
 	@Override
 	public void onPrepared(MediaPlayer mp) {
 		// TODO Auto-generated method stub
@@ -58,20 +55,20 @@ public class VideoActivity extends FragmentActivity implements OnPreparedListene
 		getMenuInflater().inflate(R.menu.video, menu);
 		return true;
 	}
-	
-	
 
-	
+
+
+
 	public void annotateText(View v)
 	{
 		Intent intent = new Intent(this,AnnotateTextActivity.class);
 		startActivity(intent);
-		
+
 	}
-	
+
 	public void annotateImpt()
 	{
-		
+
 	}
 
 }
