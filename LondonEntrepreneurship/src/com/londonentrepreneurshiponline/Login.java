@@ -19,7 +19,7 @@ public class Login extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-		//logon = (Button) findViewIdBy
+		logon = (Button) findViewById (R.id.signin);
 		
 		
 		String x = "nilesh";
