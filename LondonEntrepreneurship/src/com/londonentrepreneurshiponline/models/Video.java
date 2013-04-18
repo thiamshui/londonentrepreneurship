@@ -118,6 +118,7 @@ public class Video {
 		return videos;
 	}
 	
+<<<<<<< HEAD
 	protected class asyncVideos extends AsyncTask<String,Void,ArrayList<Video>>{
 		
 		@Override
@@ -142,3 +143,7 @@ public class Video {
 	}
 	
 }
+=======
+}	
+
+>>>>>>> branch 'master' of https://github.com/thiamshui/londonentrepreneurship.git
