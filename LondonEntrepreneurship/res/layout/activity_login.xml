@@ -55,6 +55,7 @@
         android:layout_below="@+id/tpassword"
         android:gravity="center"
         android:text="SIGN IN"
+        android:onClick="signIn"
         android:textSize="20sp" />
 
 </RelativeLayout>

@@ -37,7 +37,7 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	public VideoFragment() {
 		// Required empty public constructor
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -48,26 +48,25 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_video, container, false);
-		
+
 		vv = (VideoView) view.findViewById(R.id.videoView1);
 		caption = (TextView) view.findViewById(R.id.textView1);
 		MediaController mc = new MediaController(view.getContext());
 		mc.setMediaPlayer(vv);
+
 		vv.setOnPreparedListener(this);
 		vv.setOnCompletionListener(this);
 		
 		vv.setMediaController(mc);
-		
+
 //		return inflater.inflate(R.layout.fragment_video, container, false);
 		Intent myIntent= getActivity().getIntent();
-		int id = myIntent.getIntExtra("videoId", 1);
 		Video vid = (Video) myIntent.getSerializableExtra("video");
 		Log.d("test",vid.getDesc());
 		new loadVideoTask().execute(vid.getId());
-		
 		return view;
 	}
-	
+
 	protected class loadVideoTask extends AsyncTask<Integer,Void,Video>
 	{
 		@Override
@@ -76,23 +75,22 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 			annotations = Annotation.getAnnotationsByVideo(params[0]);
 			return vid;
 		}
-		
+
 		@Override
 		protected void onPostExecute(Video result) {
 			// TODO Auto-generated method stub
 			vv.setVideoURI(Uri.parse(result.getUri()));
 			vv.start();
-			
+
 		}
-	
 	}
-	
+
 	@Override
 	public void onPrepared(MediaPlayer mp) {
 		// TODO Auto-generated method stub
 		vv.getCurrentPosition();
 		Handler handler = new Handler();
-		handler.post(updateAnnotations);
+		handler.postDelayed(updateAnnotations, 1000);
 	}
 	
 	@Override
@@ -100,7 +98,7 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 		// TODO Auto-generated method stub
 		videoFinished = true;
 	}
-	
+
 	protected Runnable updateAnnotations = new Runnable() {
 		public void run()
 		{
