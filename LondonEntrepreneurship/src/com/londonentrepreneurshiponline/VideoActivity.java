@@ -2,9 +2,6 @@ package com.londonentrepreneurshiponline;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnPreparedListener;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -12,7 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.londonentrepreneurshiponline.models.Video;
@@ -29,16 +26,11 @@ public class VideoActivity extends FragmentActivity {
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
 		setContentView(R.layout.activity_video);
+		TextView title = (TextView) findViewById(R.id.textView2);
 		
-		/*vv = (VideoView) findViewById(R.id.videoView1);
-		
-		
-		MediaController mc = new MediaController(this);
-		mc.setMediaPlayer(vv);
-		vv.setMediaController(mc);
-
-		new loadVideoTask().execute(1);*/
-
+		Intent myIntent= getActivity().getIntent();
+		int id = myIntent.getIntExtra("videoId", 0);
+	
 		
 	//	new loadVideoTask().execute(id);
 		
