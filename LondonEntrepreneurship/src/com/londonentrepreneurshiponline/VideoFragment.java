@@ -1,6 +1,6 @@
 package com.londonentrepreneurshiponline;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +28,10 @@ import com.londonentrepreneurshiponline.models.Video;
 public class VideoFragment extends Fragment implements OnPreparedListener,OnCompletionListener {
 
 	private VideoView vv;
-	private LinkedList<Annotation> annotations;
+	private HashMap<Integer,String> annotations;
 	private TextView caption;
 	private boolean videoFinished = false;
+	private int prevCaptionTime = 0;
 
 	public VideoFragment() {
 		// Required empty public constructor
@@ -92,7 +92,6 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 		vv.getCurrentPosition();
 		Handler handler = new Handler();
 		handler.post(updateAnnotations);
-		Log.d("test","VIDEO LENGTH" + vv.getDuration());
 	}
 	
 	@Override
@@ -104,15 +103,21 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	protected Runnable updateAnnotations = new Runnable() {
 		public void run()
 		{
-			if(!annotations.isEmpty())
-				if((int) vv.getCurrentPosition() / 1000 == annotations.get(0).getTimeSecs())
-				{
-					caption.setText(annotations.get(0).getText());
-					annotations.remove();
-				}
-			Log.d("test","" + vv.getCurrentPosition());
+			int currentPos = vv.getCurrentPosition() / 1000;
+			String text = "";
+			if((text = annotations.get(currentPos)) != null)
+			{
+				caption.setText(text);
+				prevCaptionTime = currentPos;
+			}
+			
+			if(currentPos < prevCaptionTime || currentPos - prevCaptionTime > 5)
+				caption.setText("");
+			
 			if(!videoFinished)
+			{
 				new Handler().postDelayed(updateAnnotations, 1000);
+			}
 		}
 	};
 
