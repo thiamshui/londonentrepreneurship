@@ -2,13 +2,16 @@ package com.londonentrepreneurshiponline;
 
 import java.util.LinkedList;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +26,12 @@ import com.londonentrepreneurshiponline.models.Video;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  * 
  */
-public class VideoFragment extends Fragment implements OnPreparedListener {
+public class VideoFragment extends Fragment implements OnPreparedListener,OnCompletionListener {
 
 	private VideoView vv;
 	private LinkedList<Annotation> annotations;
 	private TextView caption;
+	private boolean videoFinished = false;
 
 	public VideoFragment() {
 		// Required empty public constructor
@@ -48,14 +52,17 @@ public class VideoFragment extends Fragment implements OnPreparedListener {
 		caption = (TextView) view.findViewById(R.id.textView1);
 		MediaController mc = new MediaController(view.getContext());
 		mc.setMediaPlayer(vv);
-		//vv.setOnPreparedListener(this);
+		vv.setOnPreparedListener(this);
+		vv.setOnCompletionListener(this);
 		
 		/*seekbar = (SeekBar) findViewById(R.id.seekBar1);
 		seekbar.setOnSeekBarChangeListener(this);*/
 		vv.setMediaController(mc);
 		
 //		return inflater.inflate(R.layout.fragment_video, container, false);
-		new loadVideoTask().execute(2);
+		Intent myIntent= getActivity().getIntent();
+		int id = myIntent.getIntExtra("videoId", 1);
+		new loadVideoTask().execute(id);
 		
 		return view;
 	}
@@ -84,18 +91,28 @@ public class VideoFragment extends Fragment implements OnPreparedListener {
 		// TODO Auto-generated method stub
 		vv.getCurrentPosition();
 		Handler handler = new Handler();
-		handler.postDelayed(updateAnnotations, 1000);
-		
+		handler.post(updateAnnotations);
+		Log.d("test","VIDEO LENGTH" + vv.getDuration());
+	}
+	
+	@Override
+	public void onCompletion(MediaPlayer mp) {
+		// TODO Auto-generated method stub
+		videoFinished = true;
 	}
 	
 	protected Runnable updateAnnotations = new Runnable() {
 		public void run()
 		{
-			if(vv.getCurrentPosition() == annotations.get(0).getTimeSecs())
-			{
-				caption.setText(annotations.get(0).getText());
-				annotations.remove();
-			}
+			if(!annotations.isEmpty())
+				if((int) vv.getCurrentPosition() / 1000 == annotations.get(0).getTimeSecs())
+				{
+					caption.setText(annotations.get(0).getText());
+					annotations.remove();
+				}
+			Log.d("test","" + vv.getCurrentPosition());
+			if(!videoFinished)
+				new Handler().postDelayed(updateAnnotations, 1000);
 		}
 	};
 
