@@ -1,51 +1,73 @@
 package com.londonentrepreneurshiponline;
 
-import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
+
+import android.animation.LayoutTransition;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-import android.widget.MediaController;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
+import android.widget.TabHost.TabContentFactory;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
-import android.widget.VideoView;
-
+import com.londonentrepreneurshiponline.VideoActivity.loadVideoTask;
 import com.londonentrepreneurshiponline.models.Video;
 import com.londonentrepreneurshiponline.utils.LoadImage;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener, OnTabChangeListener, OnQueryTextListener{
     public ArrayList<Video> videos;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		//Unable to use network thread with ui threat on honeycomb > 3.
 		if (android.os.Build.VERSION.SDK_INT > 9) {
 		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		    StrictMode.setThreadPolicy(policy);
-		}		
+		}	
 		setContentView(R.layout.activity_main);
-		setTabLayout();
-		videos = Video.getAllVideos();
+		setTabLayout();	
+		
+		SearchView searchBar = (SearchView) findViewById(R.id.searchView1);
+		searchBar.setOnQueryTextListener(this);		
+	}
+	
+	public void setViews(int id){
+		switch(id){
+		  case 1: videos = Video.getLatestVideos(); break;
+		  case 2: videos = Video.getFeaturedVideos();break;
+		  case 3: videos = Video.getFeaturedVideos();break;
+		}
+		
 		
 		int[] imageId = {R.id.imageView1,R.id.imageView2,R.id.imageView3,R.id.imageView4,R.id.imageView5};
 		int[] textId = {R.id.textView1,R.id.textView2,R.id.textView3,R.id.textView4,R.id.textView5};
-		
+
 		for(int i = 0; i <= imageId.length-1; i++){	
 		   ImageView images = (ImageView) findViewById(imageId[i]);
 		   images.setOnClickListener(this);
 		   Drawable drawable = LoadImage.LoadImageFromWebOperations(videos.get(i).getThumbnail());
+		   
+		   if(i == 0)
+		      drawable = LoadImage.widenImage(drawable,this);
+		   
            images.setImageDrawable(drawable);
            TextView textview = (TextView) findViewById(textId[i]);        
       	   textview.setText(videos.get(i).getTitle());	
@@ -63,23 +85,29 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	public void setTabLayout(){
 		TabHost tabs  = (TabHost) findViewById(android.R.id.tabhost);
 		tabs.setup();
+		       
+        TabSpec specs = tabs.newTabSpec("tag1");
+        specs.setContent(R.id.Featured);
+        specs.setIndicator("Featured");
+        tabs.setOnTabChangedListener(this);
+        tabs.addTab(specs);
+        
+        specs = tabs.newTabSpec("tag2");
+        specs.setIndicator("Latest");
+        specs.setContent(R.id.Featured);
+        tabs.setOnTabChangedListener(this);
+        tabs.addTab(specs);
+        
+        specs = tabs.newTabSpec("tag3");
+        specs.setContent(R.id.Featured);
+        specs.setIndicator("Categores");
+        tabs.setOnTabChangedListener(this);
+        tabs.addTab(specs);
 		
-		TabSpec specs = tabs.newTabSpec("tag1");
-		specs.setContent(R.id.featured);
-		specs.setIndicator("Featured");
-		tabs.addTab(specs);
-		
-		specs = tabs.newTabSpec("tag2");
-		specs.setContent(R.id.latest);
-		specs.setIndicator("Latest");
-		tabs.addTab(specs);
-		
-		specs = tabs.newTabSpec("tag3");
-		specs.setContent(R.id.categories);
-		specs.setIndicator("Categores");
-		tabs.addTab(specs);
+        tabs.setCurrentTab(1);
+        tabs.setCurrentTab(0);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
@@ -90,17 +118,31 @@ public class MainActivity extends Activity implements View.OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.help:
-			
+
 			break;
 		case R.id.preferences:
-			
+
 			break;		
 		}
 		return false;
-		
+
 	}
 
+	@Override
+    public void onTabChanged(String tabId) {
+        Log.d("selectedtab", tabId);
+        
+        if(tabId.contentEquals("tag1")){
+        	setViews(1);
+        }else if(tabId.contentEquals("tag2")){
+        	setViews(2);
+        }else if(tabId.contentEquals("tag2")){
+        	setViews(3);
+        }     
+                  
+	}
 
+         
 	@Override
 	public void onClick(View v) {
 		int id = 0;
@@ -125,8 +167,23 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		Intent myIntent = new Intent(this, VideoActivity.class);
 		myIntent.putExtra("videoId", id);
 		startActivity(myIntent);
-		
+
 	}
 
-	
+	@Override
+	public boolean onQueryTextChange(String arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextSubmit(String arg0) {
+		Log.d("search",arg0);
+		Intent myIntent = new Intent(this, SearchList.class);
+		myIntent.putExtra("Query", arg0);
+		startActivity(myIntent);
+		return false;
+	}
+
+
 }

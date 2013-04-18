@@ -81,18 +81,18 @@ public class Video {
 	/* deserialize video collection
 	 * Reference: https://sites.google.com/site/gson/gson-user-guide#TOC-Collections-Examples
 	 */
-	public static ArrayList<Video> getAllVideos()
+	public static ArrayList<Video> getFeaturedVideos()
 	{
-		GsonBuilder gsonb = new GsonBuilder();
-		Gson gson = gsonb.create();
-
-		Type vidCollection = new TypeToken<ArrayList<Video>>() {}.getType();
-		ArrayList<Video> videos = null;
-
-		String json = WSClient.httpGET("http://comp1008.thiamshui.net/video.php");
-		videos = gson.fromJson(json, vidCollection);
-		
-		return videos;
+		return getVideosByUrl("http://comp1008.thiamshui.net/video.php?featured");
+	}
+	public static ArrayList<Video> getLatestVideos()
+	{
+		return getVideosByUrl("http://comp1008.thiamshui.net/video.php?latest");
+	}
+	
+	public static ArrayList<Video> searchVideos(String searchStr)
+	{
+		return getVideosByUrl("http://comp1008.thiamshui.net/video.php?search=" + searchStr);
 	}
 
 	public static Video getVideoById(int id) {
@@ -102,5 +102,19 @@ public class Video {
 
 		jsonString = WSClient.httpGET("http://comp1008.thiamshui.net/video.php?id="	+ id);
 		return (Video) gson.fromJson(jsonString, Video.class);
+	}
+	
+	private static ArrayList<Video> getVideosByUrl(String url)
+	{
+		GsonBuilder gsonb = new GsonBuilder();
+		Gson gson = gsonb.create();
+
+		Type vidCollection = new TypeToken<ArrayList<Video>>() {}.getType();
+		ArrayList<Video> videos = null;
+
+		String json = WSClient.httpGET(url);
+		videos = gson.fromJson(json, vidCollection);
+		
+		return videos;
 	}
 }
