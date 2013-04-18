@@ -1,28 +1,38 @@
 package com.londonentrepreneurshiponline;
 
 import java.util.ArrayList;
+
+import android.animation.LayoutTransition;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
+import android.widget.TabHost.TabContentFactory;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import com.londonentrepreneurshiponline.VideoActivity.loadVideoTask;
 import com.londonentrepreneurshiponline.models.Video;
 import com.londonentrepreneurshiponline.utils.LoadImage;
 
-public class MainActivity extends Activity implements View.OnClickListener, OnTabChangeListener, OnQueryTextListener {
+public class MainActivity extends Activity implements View.OnClickListener, OnTabChangeListener, OnQueryTextListener{
     public ArrayList<Video> videos;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,9 +41,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 		if (android.os.Build.VERSION.SDK_INT > 9) {
 		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		    StrictMode.setThreadPolicy(policy);
-		}		
+		}	
 		setContentView(R.layout.activity_main);
 		setTabLayout();	
+		
 		SearchView searchBar = (SearchView) findViewById(R.id.searchView1);
 		searchBar.setOnQueryTextListener(this);		
 	}
@@ -74,25 +85,27 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 	public void setTabLayout(){
 		TabHost tabs  = (TabHost) findViewById(android.R.id.tabhost);
 		tabs.setup();
-		
+		       
         TabSpec specs = tabs.newTabSpec("tag1");
+        specs.setContent(R.id.Featured);
         specs.setIndicator("Featured");
-        specs.setContent(R.id.featured);
         tabs.setOnTabChangedListener(this);
         tabs.addTab(specs);
-
+        
         specs = tabs.newTabSpec("tag2");
-        specs.setContent(R.id.latest);
         specs.setIndicator("Latest");
+        specs.setContent(R.id.Featured);
         tabs.setOnTabChangedListener(this);
         tabs.addTab(specs);
-
+        
         specs = tabs.newTabSpec("tag3");
-        specs.setContent(R.id.categories);
+        specs.setContent(R.id.Featured);
         specs.setIndicator("Categores");
         tabs.setOnTabChangedListener(this);
         tabs.addTab(specs);
 		
+        tabs.setCurrentTab(1);
+        tabs.setCurrentTab(0);
 	}
 
 	@Override
@@ -118,15 +131,18 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 	@Override
     public void onTabChanged(String tabId) {
         Log.d("selectedtab", tabId);
+        
         if(tabId.contentEquals("tag1")){
         	setViews(1);
         }else if(tabId.contentEquals("tag2")){
         	setViews(2);
         }else if(tabId.contentEquals("tag2")){
         	setViews(3);
-        }       
-    }
+        }     
+                  
+	}
 
+         
 	@Override
 	public void onClick(View v) {
 		int id = 0;
@@ -163,6 +179,9 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 	@Override
 	public boolean onQueryTextSubmit(String arg0) {
 		Log.d("search",arg0);
+		Intent myIntent = new Intent(this, SearchList.class);
+		myIntent.putExtra("Query", arg0);
+		startActivity(myIntent);
 		return false;
 	}
 

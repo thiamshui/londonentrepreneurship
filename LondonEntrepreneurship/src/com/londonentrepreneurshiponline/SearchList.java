@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
@@ -42,6 +43,7 @@ public class SearchList extends Activity implements View.OnClickListener {
     private Drawable drawable;
 	private ArrayList<Video> videos;
 	ImageView rowImages;
+	Canvas canvas;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){	
@@ -51,40 +53,40 @@ public class SearchList extends Activity implements View.OnClickListener {
 		if (android.os.Build.VERSION.SDK_INT > 9) {
 		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		    StrictMode.setThreadPolicy(policy);
-	}	
-		videos = Video.searchVideos("Richard");
-	        
+	    }
+		Intent myIntent= getIntent();
+		String query = myIntent.getStringExtra("Query");
+		videos = Video.searchVideos(query);
+		
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 			    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		params.gravity = Gravity.LEFT;
 	    params.topMargin=30;
 	    params.leftMargin = 20;
 	    
 	    LinearLayout.LayoutParams paramsText = new LinearLayout.LayoutParams(
-			    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		paramsText.gravity = Gravity.RIGHT;
+			    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);		
 	    paramsText.topMargin=20;
 	    paramsText.rightMargin = 20;
 	    paramsText.leftMargin = 10;
 	    	
 		ScrollView sv = new ScrollView(this);
+		sv.setLayoutParams(params);
 		LinearLayout ll = new LinearLayout(this);	
 		ll.setOrientation(LinearLayout.VERTICAL);
 		sv.addView(ll);
 		
 		
 		for(int i = 0; i<= videos.size()-1; i++){
+			
 		  LinearLayout row = new LinearLayout(this);
           row.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                
-  		        
+                       
                 rowImages = new ImageView(this);
 			    rowImages.setId(i);
 			    String uri = (videos.get(i).getThumbnail());
 			    rowImages.setTag(uri);
 			    drawable = LoadImage.LoadImageFromWebOperations(uri);
-			    Log.d("BACKGROUND", "before");
-			    //new DownloadImage().execute(uri);
+
 			    rowImages.setImageDrawable(drawable);   
 			    
 			    rowImages.setLayoutParams(params);
@@ -97,6 +99,7 @@ public class SearchList extends Activity implements View.OnClickListener {
 	      	    row.addView(textview);
 	 		    	
 	      	    ll.addView(row);
+	      	    
 		}
 	    this.setContentView(sv);			
 	}

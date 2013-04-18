@@ -26,7 +26,7 @@ public class LoadImage{
 	
     public static Drawable widenImage(Drawable drawable, Context context){
 		Bitmap bMap = ((BitmapDrawable)drawable).getBitmap(); 
-		Drawable d = new BitmapDrawable(context.getResources(),getResizedBitmap(bMap,220,500));
+		Drawable d = new BitmapDrawable(context.getResources(),getResizedBitmap(bMap,400,770));
 		return d;
 	}
 	
