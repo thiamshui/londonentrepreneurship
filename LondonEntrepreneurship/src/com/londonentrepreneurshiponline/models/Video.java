@@ -117,4 +117,7 @@ public class Video {
 		
 		return videos;
 	}
+	
+	protected class asyncVideos
+	
 }
