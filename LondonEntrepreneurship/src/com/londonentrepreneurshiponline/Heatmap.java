@@ -69,28 +69,28 @@ public class Heatmap extends Activity {
         dataset.addSeries(clicksSeries);
 		
         XYSeriesRenderer clicksRenderer = new XYSeriesRenderer();
-        		clicksRenderer.setColor(Color.CYAN);
+        clicksRenderer.setColor(Color.CYAN);
         clicksRenderer.setFillPoints(true);
         clicksRenderer.setLineWidth(1);
         clicksRenderer.setDisplayChartValues(true);
         
-        XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
-        multiRenderer.setXLabels(0);
-        multiRenderer.setChartTitle("IMPORTANCE CHART");
-        multiRenderer.setChartTitleTextSize(30);
-        multiRenderer.setXTitle("Number of seconds (s)");
-        multiRenderer.setBarSpacing(0.05);
-        multiRenderer.setAxisTitleTextSize(24);
-        multiRenderer.setLabelsTextSize(15);
-        multiRenderer.setYTitle("Importance (Clicks)");
-        multiRenderer.setZoomButtonsVisible(false);
+        XYMultipleSeriesRenderer allclicks = new XYMultipleSeriesRenderer();
+        allclicks.setXLabels(0);
+        allclicks.setChartTitle("IMPORTANCE CHART");
+        allclicks.setChartTitleTextSize(30);
+        allclicks.setXTitle("Number of seconds (s)");
+        allclicks.setBarSpacing(0.05);
+        allclicks.setAxisTitleTextSize(24);
+        allclicks.setLabelsTextSize(15);
+        allclicks.setYTitle("Importance (Clicks)");
+        allclicks.setZoomButtonsVisible(false);
         for(int i=0; i< x.length;i++){
-            multiRenderer.addXTextLabel(i, "" + secs[i]);
+        	allclicks.addXTextLabel(i, "" + secs[i]);
         }
         
-        multiRenderer.addSeriesRenderer(clicksRenderer);
+        allclicks.addSeriesRenderer(clicksRenderer);
         
-        Intent intent = ChartFactory.getBarChartIntent(getBaseContext(), dataset, multiRenderer, Type.DEFAULT);
+        Intent intent = ChartFactory.getBarChartIntent(getBaseContext(), dataset, allclicks, Type.DEFAULT);
         
         startActivity(intent);
         

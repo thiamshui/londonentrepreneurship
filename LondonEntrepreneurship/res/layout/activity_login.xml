@@ -8,77 +8,53 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Login" >
 
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="165dp"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="textEmailAddress" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editText1"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_alignRight="@+id/editText1"
-        android:layout_centerHorizontal="false"
-        android:layout_centerVertical="false"
-        android:layout_marginBottom="52dp"
-        android:text="USERNAME"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
-        android:gravity="center"
-        android:text="PASSWORD"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="textPassword" />
-
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText1"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_marginTop="41dp"
-        android:text="LOGIN"
-        android:textSize="35sp"
-        android:textStyle="bold|italic"
-        android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:gravity="left"
+        android:text="  Login"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30dp"
+        android:textStyle="bold|italic" />
+
+    <EditText
+        android:id="@+id/tpassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tusername"
+        android:layout_below="@+id/tusername"
+        android:ems="10"
+        android:gravity="left"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textStyle="italic" />
+
+    <EditText
+        android:id="@+id/tusername"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:gravity="left"
+        android:hint="Username"
+        android:textStyle="italic" >
+
+        <requestFocus />
+    </EditText>
 
     <Button
         android:id="@+id/signin"
-        android:layout_width="160dp"
+        android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="18sp"
+        android:layout_alignLeft="@+id/tpassword"
+        android:layout_below="@+id/tpassword"
         android:gravity="center"
-        android:textSize="20sp"
-        android:text="SIGN IN" />
+        android:text="SIGN IN"
+        android:textSize="20sp" />
 
 </RelativeLayout>
