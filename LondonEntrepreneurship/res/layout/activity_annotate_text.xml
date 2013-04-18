@@ -9,16 +9,7 @@
     tools:context=".AnnotateTextActivity" >
 
     <Button
-        android:id="@+id/button2"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/button1"
-        android:text="Save" />
-
-    <Button
-        android:id="@+id/button1"
+        android:id="@+id/Bdiscard"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,28 +19,31 @@
         android:text="Discard" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/textAnnot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/button1"
-        android:layout_below="@+id/button2"
+        android:layout_alignRight="@+id/Bdiscard"
+        android:layout_below="@+id/Bdiscard"
         android:ems="10"
         android:gravity="top"
         android:inputType="textMultiLine"
+        android:hint="Annotate"
+        android:textStyle="italic"
         android:padding="2dp" />
 
     <requestFocus
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <CheckedTextView
-        android:id="@+id/timeline1"
+    <Button
+        android:id="@+id/Bsave"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_alignLeft="@+id/editText1"
-        android:text="Timeline" />
+        android:layout_above="@+id/editText1"
+        android:layout_toLeftOf="@+id/Bdiscard"
+        android:text="Save" />
 
 </RelativeLayout>

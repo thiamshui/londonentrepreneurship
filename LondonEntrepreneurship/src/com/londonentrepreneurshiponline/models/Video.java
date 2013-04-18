@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import android.os.AsyncTask;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -114,5 +116,31 @@ public class Video implements Serializable{
 		return videos;
 	}
 	
-}	
+
+	protected class asyncVideos extends AsyncTask<String,Void,ArrayList<Video>>{
+		
+		@Override
+		protected ArrayList<Video> doInBackground(String... params) {
+			GsonBuilder gsonb = new GsonBuilder();
+			Gson gson = gsonb.create();
+
+			Type vidCollection = new TypeToken<ArrayList<Video>>() {}.getType();
+			ArrayList<Video> videos = null;
+
+			String json = WSClient.httpGET(params[0]);
+			videos = gson.fromJson(json, vidCollection);
+			return videos;
+		}
+		
+		@Override
+		protected void onPostExecute(ArrayList<Video> result) {
+			// TODO Auto-generated method stub
+			
+			
+		}
+	}
+	
+}
+
+
 
