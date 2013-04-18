@@ -2,51 +2,42 @@ package com.londonentrepreneurshiponline;
 
 import java.util.ArrayList;
 
-import android.animation.LayoutTransition;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
-import android.view.MenuInflater;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
-import android.widget.TabHost.TabContentFactory;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
-import com.londonentrepreneurshiponline.VideoActivity.loadVideoTask;
+
 import com.londonentrepreneurshiponline.models.Video;
 import com.londonentrepreneurshiponline.utils.LoadImage;
 
 public class MainActivity extends Activity implements View.OnClickListener, OnTabChangeListener, OnQueryTextListener{
-    public ArrayList<Video> videos;
+    private ArrayList<Video> videos;
+    private Drawable[] images = new Drawable[5];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		//Unable to use network thread with ui threat on honeycomb > 3.
-		if (android.os.Build.VERSION.SDK_INT > 9) {
+		/*if (android.os.Build.VERSION.SDK_INT > 9) {
 		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		    StrictMode.setThreadPolicy(policy);
-		}	
+		}*/
 		setContentView(R.layout.activity_main);
-		setTabLayout();	
-		setViews(1);
+		setTabLayout();
 		
 		SearchView searchBar = (SearchView) findViewById(R.id.searchView1);
 		searchBar.setOnQueryTextListener(this);		
@@ -65,6 +56,11 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 			  case 2: videos = Video.getLatestVideos();break;
 			  case 3: videos = Video.getFeaturedVideos();break;
 			}
+			
+			for(int i=0;i<5;i++)
+			{
+				images[i] = LoadImage.LoadImageFromWebOperations(videos.get(i).getThumbnail());
+			}
 			return null;
 		}
 		
@@ -75,14 +71,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 			int[] textId = {R.id.textView1,R.id.textView2,R.id.textView3,R.id.textView4,R.id.textView5};
 
 			for(int i = 0; i <= imageId.length-1; i++){	
-			   ImageView images = (ImageView) findViewById(imageId[i]);
-			   images.setOnClickListener(MainActivity.this);
-			   Drawable drawable = LoadImage.LoadImageFromWebOperations(videos.get(i).getThumbnail());
+			   ImageView image = (ImageView) findViewById(imageId[i]);
+			   image.setOnClickListener(MainActivity.this);
 			   
-			   //if(i == 0)
-			    //  drawable = LoadImage.widenImage(drawable,MainActivity.this);
-			   
-	           images.setImageDrawable(drawable);
+	           image.setImageDrawable(images[i]);
 	           TextView textview = (TextView) findViewById(textId[i]);        
 	      	   textview.setText(videos.get(i).getTitle());	
 			}  			
