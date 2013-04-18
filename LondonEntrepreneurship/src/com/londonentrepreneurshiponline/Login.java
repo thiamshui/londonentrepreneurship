@@ -8,13 +8,20 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.Button;
 
 public class Login extends Activity {
+	
+	Button logon;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		
+		//logon = (Button) findViewIdBy
+		
+		
 		String x = "nilesh";
 		md5(x);
 	}
