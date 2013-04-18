@@ -16,6 +16,7 @@
         android:layout_width="600dp"
         android:layout_height="190dp"
         android:layout_below="@+id/searchView1"
+        android:scaleType="fitXY"
       />
 
     <ScrollView
@@ -45,6 +46,7 @@
                  android:layout_below="@+id/imageView1"
                  android:layout_marginTop = "10dp"
                  android:layout_marginLeft="22dp"
+                 android:scaleType="fitXY"
                    />
 
                <TextView
@@ -72,6 +74,7 @@
                  android:layout_width="116dp"
                  android:layout_height="68dp"
                  android:layout_marginLeft="22dp"
+                 android:scaleType="fitXY"
                  android:layout_marginTop="10dp" />
 
                <TextView
@@ -99,6 +102,7 @@
                  android:layout_height="64dp"
                  android:layout_below="@+id/imageView3"
                  android:layout_marginTop = "10dp"
+                 android:scaleType="fitXY"
                  android:layout_marginLeft="22dp"
                />
               <TextView
@@ -125,6 +129,7 @@
                  android:layout_width="116dp"
                  android:layout_height="64dp"
                  android:layout_below="@+id/imageView4"
+                 android:scaleType="fitXY"
                  android:layout_marginTop = "10dp"
                  android:layout_marginLeft="22dp" />
             <TextView

@@ -1,10 +1,13 @@
 package com.londonentrepreneurshiponline;
-
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import android.animation.LayoutTransition;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -25,22 +28,18 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabContentFactory;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
-import com.londonentrepreneurshiponline.VideoActivity.loadVideoTask;
 import com.londonentrepreneurshiponline.models.Video;
 import com.londonentrepreneurshiponline.utils.LoadImage;
 
 public class MainActivity extends Activity implements View.OnClickListener, OnTabChangeListener, OnQueryTextListener{
     public ArrayList<Video> videos;
-
+   
+    int j;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		//Unable to use network thread with ui threat on honeycomb > 3.
-		if (android.os.Build.VERSION.SDK_INT > 9) {
-		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		    StrictMode.setThreadPolicy(policy);
-		}	
+		
 		setContentView(R.layout.activity_main);
 		setTabLayout();	
 
@@ -49,27 +48,9 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 	}
 
 	public void setViews(int id){
-		switch(id){
-		  case 1: videos = Video.getLatestVideos(); break;
-		  case 2: videos = Video.getFeaturedVideos();break;
-		  case 3: videos = Video.getFeaturedVideos();break;
-		}
-
-
-		int[] imageId = {R.id.imageView1,R.id.imageView2,R.id.imageView3,R.id.imageView4,R.id.imageView5};
-		int[] textId = {R.id.textView1,R.id.textView2,R.id.textView3,R.id.textView4,R.id.textView5};
-
-		for(int i = 0; i <= imageId.length-1; i++){	
-		   ImageView images = (ImageView) findViewById(imageId[i]);
-		   images.setOnClickListener(this);
-		   Drawable drawable = LoadImage.LoadImageFromWebOperations(videos.get(i).getThumbnail());
-
-           images.setImageDrawable(drawable);
-           TextView textview = (TextView) findViewById(textId[i]);        
-      	   textview.setText(videos.get(i).getTitle());	
-		}  			
+		new loadVideoTask().execute(id);
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -99,9 +80,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
         specs.setIndicator("Categores");
         tabs.setOnTabChangedListener(this);
         tabs.addTab(specs);
-
-        tabs.setCurrentTab(1);
-        tabs.setCurrentTab(0);
 	}
 
 	@Override
@@ -121,24 +99,19 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 			break;		
 		}
 		return false;
-
 	}
 
 	@Override
     public void onTabChanged(String tabId) {
-        Log.d("selectedtab", tabId);
-        
         if(tabId.contentEquals("tag1")){
         	setViews(1);
         }else if(tabId.contentEquals("tag2")){
         	setViews(2);
-        }else if(tabId.contentEquals("tag2")){
+        }else if(tabId.contentEquals("tag3")){
         	setViews(3);
-        }     
-                  
+        }             
 	}
-
-         
+   
 	@Override
 	public void onClick(View v) {
 		int id = 0;
@@ -163,7 +136,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 		Intent myIntent = new Intent(this, VideoActivity.class);
 		myIntent.putExtra("videoId", id);
 		startActivity(myIntent);
-
 	}
 
 	@Override
@@ -179,5 +151,36 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 		myIntent.putExtra("Query", arg0);
 		startActivity(myIntent);
 		return false;
+	}
+	protected class loadVideoTask extends AsyncTask<Integer,Void,Void>
+	{
+		
+		@Override
+		protected Void doInBackground(Integer... params) {
+			switch(params[0]){
+			  case 1: videos = Video.getFeaturedVideos(); break;
+			  case 2: videos = Video.getLatestVideos();break;
+			  case 3: videos = Video.getLatestVideos();break;
+			}
+			
+			
+			return null;
+		}
+		@Override
+		protected void onPostExecute(Void result) {
+			
+			j = 0;
+			int[] imageId = {R.id.imageView1,R.id.imageView2,R.id.imageView3,R.id.imageView4,R.id.imageView5};
+			int[] textId = {R.id.textView1,R.id.textView2,R.id.textView3,R.id.textView4,R.id.textView5};
+
+		    for(int i = 0; i <= imageId.length-1; i++){	
+			   ImageView image = (ImageView) findViewById(imageId[i]);
+		       image.setOnClickListener(MainActivity.this);	   
+               Drawable drawable = LoadImafge
+               image.setImageDrawable(images[i]);
+               TextView textview = (TextView) findViewById(textId[i]);        
+      	       textview.setText(videos.get(i).getTitle());	
+		    }  						
+	   }
 	}
 }

@@ -2,6 +2,8 @@ package com.londonentrepreneurshiponline;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,7 +17,8 @@ import android.widget.VideoView;
 
 import com.londonentrepreneurshiponline.models.Video;
 
-public class VideoActivity extends FragmentActivity {
+
+public class VideoActivity extends FragmentActivity implements OnPreparedListener {
 
 	private VideoView vv;
 	@Override
@@ -27,25 +30,9 @@ public class VideoActivity extends FragmentActivity {
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
 		setContentView(R.layout.activity_video);
+		
 		TextView title = (TextView) findViewById(R.id.textView2);
-//		vv = (VideoView) findViewById(R.id.videoView1);
-//		
-//		
-//		MediaController mc = new MediaController(this);
-//		mc.setMediaPlayer(vv);
-//		
-//		
-//		
-//		seekbar = (SeekBar) findViewById(R.id.seekBar1);
-//		if(seekbar != null)
-//		{
-//			seekbar.setOnSeekBarChangeListener(this);
-//			vv.setOnPreparedListener(this);
-//		}
-//		vv.setMediaController(mc);
-//
-//		//new loadVideoTask().execute(1);
-
+		
 		Intent myIntent= getIntent();
 		int id = myIntent.getIntExtra("videoId", 1);
 		new loadVideoTask().execute(id);
@@ -65,6 +52,7 @@ public class VideoActivity extends FragmentActivity {
 		getMenuInflater().inflate(R.menu.video, menu);
 		return true;
 	}
+
 	
 	protected class loadVideoTask extends AsyncTask<Integer,Void,Video>
 	{
@@ -84,4 +72,12 @@ public class VideoActivity extends FragmentActivity {
 	
 	}
 
+
+	@Override
+	public void onPrepared(MediaPlayer arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }
+
+

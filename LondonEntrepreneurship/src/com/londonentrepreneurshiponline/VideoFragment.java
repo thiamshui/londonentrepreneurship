@@ -33,7 +33,7 @@ public class VideoFragment extends Fragment implements OnPreparedListener {
 	public VideoFragment() {
 		// Required empty public constructor
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -44,25 +44,25 @@ public class VideoFragment extends Fragment implements OnPreparedListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_video, container, false);
-		
+
 		vv = (VideoView) view.findViewById(R.id.videoView1);
 		caption = (TextView) view.findViewById(R.id.textView1);
 		MediaController mc = new MediaController(view.getContext());
 		mc.setMediaPlayer(vv);
 		//vv.setOnPreparedListener(this);
-		
+
 		/*seekbar = (SeekBar) findViewById(R.id.seekBar1);
 		seekbar.setOnSeekBarChangeListener(this);*/
 		vv.setMediaController(mc);
-		
-		Intent myIntent= getActivity().getIntent();
-		int id = myIntent.getIntExtra("videoId", 0);
+
 //		return inflater.inflate(R.layout.fragment_video, container, false);
+		Intent myIntent= getActivity().getIntent();
+		int id = myIntent.getIntExtra("videoId", 1);
 		new loadVideoTask().execute(id);
-		
+
 		return view;
 	}
-	
+
 	protected class loadVideoTask extends AsyncTask<Integer,Void,Video>
 	{
 		@Override
@@ -71,26 +71,26 @@ public class VideoFragment extends Fragment implements OnPreparedListener {
 			annotations = Annotation.getAnnotationsByVideo(params[0]);
 			return vid;
 		}
-		
+
 		@Override
 		protected void onPostExecute(Video result) {
 			// TODO Auto-generated method stub
 			vv.setVideoURI(Uri.parse(result.getUri()));
 			vv.start();
-			
+
 		}
-	
+
 	}
-	
+
 	@Override
 	public void onPrepared(MediaPlayer mp) {
 		// TODO Auto-generated method stub
 		vv.getCurrentPosition();
 		Handler handler = new Handler();
 		handler.postDelayed(updateAnnotations, 1000);
-		
+
 	}
-	
+
 	protected Runnable updateAnnotations = new Runnable() {
 		public void run()
 		{
