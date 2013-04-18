@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.SeekBar;
 import android.widget.VideoView;
 
 import com.londonentrepreneurshiponline.models.Video;
@@ -19,7 +18,6 @@ import com.londonentrepreneurshiponline.models.Video;
 public class VideoActivity extends FragmentActivity implements OnPreparedListener {
 
 	private VideoView vv;
-	private SeekBar seekbar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,21 +45,9 @@ public class VideoActivity extends FragmentActivity implements OnPreparedListene
 	@Override
 	public void onPrepared(MediaPlayer mp) {
 		// TODO Auto-generated method stub
-		seekbar.setMax(vv.getDuration());
-		seekbar.postDelayed(updateSeekBar, 1000);
+		//seekbar.setMax(vv.getDuration());
+		//seekbar.postDelayed(updateSeekBar, 1000);
 	}
-	
-	private Runnable updateSeekBar = new Runnable() {
-		public void run()
-		{
-			if(seekbar != null)
-			{
-				seekbar.setProgress(vv.getCurrentPosition());
-			}
-			if(vv.isPlaying())
-				seekbar.postDelayed(updateSeekBar, 1000);
-		};
-	};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
