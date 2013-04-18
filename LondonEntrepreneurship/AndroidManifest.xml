@@ -29,6 +29,10 @@
             android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity
+            android:name="com.londonentrepreneurshiponline.annotate.AnnotateTextActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity
             android:name="com.londonentrepreneurshiponline.VideoActivity"
             android:label="@string/app_name" >
         </activity>

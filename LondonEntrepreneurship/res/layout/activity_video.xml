@@ -47,7 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView2"
         android:layout_toRightOf="@+id/imageButton1"
-        android:src="@android:drawable/star_big_on" />
+        android:src="@android:drawable/star_big_on"
+        android:onClick="annotateImpt" />
 
     <TextView
         android:id="@+id/textView2"
@@ -74,6 +75,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="14dp"
-        android:src="@android:drawable/ic_menu_edit" />
+        android:src="@android:drawable/ic_menu_edit"
+        android:onClick="annotateText" />
 
 </RelativeLayout>
