@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,14 +56,14 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 		vv.setOnPreparedListener(this);
 		vv.setOnCompletionListener(this);
 		
-		/*seekbar = (SeekBar) findViewById(R.id.seekBar1);
-		seekbar.setOnSeekBarChangeListener(this);*/
 		vv.setMediaController(mc);
 		
 //		return inflater.inflate(R.layout.fragment_video, container, false);
 		Intent myIntent= getActivity().getIntent();
 		int id = myIntent.getIntExtra("videoId", 1);
-		new loadVideoTask().execute(id);
+		Video vid = (Video) myIntent.getSerializableExtra("video");
+		Log.d("test",vid.getDesc());
+		new loadVideoTask().execute(vid.getId());
 		
 		return view;
 	}
@@ -120,5 +121,10 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 			}
 		}
 	};
+	
+	public void captionTouch()
+	{
+		Log.d("test","TOUCH");
+	}
 
 }

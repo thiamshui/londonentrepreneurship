@@ -155,27 +155,27 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
          
 	@Override
 	public void onClick(View v) {
-		int id = 0;
+		Video vid = null;
 		// TODO Auto-generated method stub
 		switch(v.getId()){
 		case R.id.imageView1:
-			id = videos.get(0).getId();;
+			vid = videos.get(0);
 			break;
 		case R.id.imageView2:
-			id = videos.get(1).getId();
+			vid = videos.get(1);
 			break;
 		case R.id.imageView3:
-			id = videos.get(2).getId();
+			vid = videos.get(2);
 			break;
 		case R.id.imageView4:
-			id = videos.get(3).getId();
+			vid = videos.get(3);
 			break;
 		case R.id.imageView5:
-			id = videos.get(4).getId();
+			vid = videos.get(4);
 			break;
 		}
 		Intent myIntent = new Intent(this, VideoActivity.class);
-		myIntent.putExtra("videoId", id);
+		myIntent.putExtra("video",vid);
 		startActivity(myIntent);
 
 	}

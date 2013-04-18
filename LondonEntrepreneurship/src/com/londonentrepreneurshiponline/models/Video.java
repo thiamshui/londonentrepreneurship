@@ -3,13 +3,9 @@
  */
 package com.londonentrepreneurshiponline.models;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,7 +16,7 @@ import com.londonentrepreneurshiponline.utils.WSClient;
  * @author thiamshui
  * 
  */
-public class Video {
+public class Video implements Serializable{
 	
 	private int id;
 	private String uri;

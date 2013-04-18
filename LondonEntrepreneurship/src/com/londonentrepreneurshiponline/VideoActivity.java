@@ -4,15 +4,16 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.londonentrepreneurshiponline.annotate.AnnotateTextActivity;
 import com.londonentrepreneurshiponline.models.Video;
 
 public class VideoActivity extends FragmentActivity implements OnPreparedListener {
@@ -28,8 +29,10 @@ public class VideoActivity extends FragmentActivity implements OnPreparedListene
 		}
 		setContentView(R.layout.activity_video);
 		
-		Intent myIntent= getIntent();
-		int id = myIntent.getIntExtra("videoId", 1);
+		Video vid = (Video) getIntent().getSerializableExtra("video");
+		((TextView)findViewById(R.id.textView2)).setText(vid.getTitle());
+		((TextView)findViewById(R.id.textView3)).setText(vid.getDesc());
+		//int id = myIntent.getIntExtra("videoId", 1);
 		//new loadVideoTask().execute(id);
 
 	}
@@ -57,23 +60,18 @@ public class VideoActivity extends FragmentActivity implements OnPreparedListene
 	}
 	
 	
-	protected class loadVideoTask extends AsyncTask<Integer,Void,Video>
-	{
-		@Override
-		protected Video doInBackground(Integer... params) {
-			Video vid = Video.getVideoById(params[0]);
-			return vid;
-		}
-		
-		@Override
-		protected void onPostExecute(Video result) {
-			// TODO Auto-generated method stub
-			vv.setVideoURI(Uri.parse(result.getUri()));
-		
-			vv.start();
-			
-		}
+
 	
+	public void annotateText(View v)
+	{
+		Intent intent = new Intent(this,AnnotateTextActivity.class);
+		startActivity(intent);
+		
+	}
+	
+	public void annotateImpt()
+	{
+		
 	}
 
 }
