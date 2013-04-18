@@ -19,6 +19,7 @@ import com.londonentrepreneurshiponline.models.Video;
 public class VideoActivity extends FragmentActivity implements OnPreparedListener {
 
 	private VideoView vv;
+	private boolean loggedIn = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,8 +33,6 @@ public class VideoActivity extends FragmentActivity implements OnPreparedListene
 		Video vid = (Video) getIntent().getSerializableExtra("video");
 		((TextView)findViewById(R.id.textView2)).setText(vid.getTitle());
 		((TextView)findViewById(R.id.textView3)).setText(vid.getDesc());
-		//int id = myIntent.getIntExtra("videoId", 1);
-		//new loadVideoTask().execute(id);
 
 	}
 	
@@ -65,11 +64,27 @@ public class VideoActivity extends FragmentActivity implements OnPreparedListene
 	public void annotateText(View v)
 	{
 		Intent intent = new Intent(this,AnnotateTextActivity.class);
-		startActivity(intent);
+		if(intent.getStringExtra("user") != null || loggedIn)
+			startActivity(intent);
+		else
+			startActivityForResult(new Intent(this,Login.class),1);
 		
 	}
 	
-	public void annotateImpt()
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		if(requestCode == 1) // annotate Text
+		{
+			if(resultCode == RESULT_OK)
+			{
+				startActivity(new Intent(this,AnnotateTextActivity.class).putExtra("user", data.getStringExtra("user")));
+				loggedIn = true;
+			}
+		}
+	}
+	
+	public void annotateImpt(View v)
 	{
 		
 	}

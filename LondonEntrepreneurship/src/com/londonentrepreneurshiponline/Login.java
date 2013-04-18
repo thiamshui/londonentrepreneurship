@@ -4,13 +4,20 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.util.Log;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.londonentrepreneurshiponline.models.Member;
 
 public class Login extends Activity {
 
@@ -22,22 +29,15 @@ public class Login extends Activity {
 		setContentView(R.layout.activity_login);
 
 		logon = (Button) findViewById(R.id.signin);
-		logon.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				EditText passText = (EditText) findViewById(R.id.tpassword);
-				String getpass = passText.getText().toString();
-
-				EditText usernameText = (EditText) findViewById(R.id.tusername);
-				String getusername = usernameText.getText().toString();
+	}
+	
+	public void signIn(View v)
+	{
+		EditText passText = (EditText) findViewById(R.id.tpassword);
+		EditText usernameText = (EditText) findViewById(R.id.tusername);
+		
+		new authenticateTask().execute(usernameText.getText().toString(),md5(passText.getText().toString()));
 				
-				md5(getpass);
-				
-				
-			}
-		});
 	}
 
 	public String md5(String s) {
@@ -61,6 +61,41 @@ public class Login extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
+	}
+	
+	protected class authenticateTask extends AsyncTask<String,Void,Member>
+	{
+		@Override
+		protected Member doInBackground(String... params) {
+			Member m = Member.authenticate(params[0],params[1]);
+			
+			return m;
+		}
+		
+		@Override
+		protected void onPostExecute(Member result) {
+			// TODO Auto-generated method stub
+			if(result == null)
+			{
+				// Shake animation reference: http://stackoverflow.com/questions/10956454/android-r-anim-shake-not-found
+				// http://www.edumobile.org/android/android-programming-tutorials/shake-animation-example/
+				Animation shake = AnimationUtils.loadAnimation(Login.this, R.anim.shake);
+				findViewById(R.id.tpassword).startAnimation(shake);
+				findViewById(R.id.tusername).startAnimation(shake);
+				Toast toast = Toast.makeText(Login.this, "Invalid username/password.", 5000);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
+			}
+			else
+			{
+				Toast.makeText(Login.this, "Sign-in Successful", 5000).show();
+				
+				setResult(RESULT_OK,new Intent().putExtra("user", result.getUsername()));
+				finish();
+			}
+
+		}
+	
 	}
 
 }
