@@ -2,6 +2,7 @@ package com.londonentrepreneurshiponline;
 
 import java.util.LinkedList;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
@@ -55,7 +56,9 @@ public class VideoFragment extends Fragment implements OnPreparedListener {
 		vv.setMediaController(mc);
 		
 //		return inflater.inflate(R.layout.fragment_video, container, false);
-		new loadVideoTask().execute(2);
+		Intent myIntent= getActivity().getIntent();
+		int id = myIntent.getIntExtra("videoId", 1);
+		new loadVideoTask().execute(id);
 		
 		return view;
 	}

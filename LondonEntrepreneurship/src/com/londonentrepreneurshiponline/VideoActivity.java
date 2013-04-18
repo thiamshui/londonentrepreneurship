@@ -16,7 +16,7 @@ import android.widget.VideoView;
 
 import com.londonentrepreneurshiponline.models.Video;
 
-public class VideoActivity extends FragmentActivity implements SeekBar.OnSeekBarChangeListener,OnPreparedListener {
+public class VideoActivity extends FragmentActivity implements OnPreparedListener {
 
 	private VideoView vv;
 	private SeekBar seekbar;
@@ -30,27 +30,9 @@ public class VideoActivity extends FragmentActivity implements SeekBar.OnSeekBar
 		}
 		setContentView(R.layout.activity_video);
 		
-//		vv = (VideoView) findViewById(R.id.videoView1);
-//		
-//		
-//		MediaController mc = new MediaController(this);
-//		mc.setMediaPlayer(vv);
-//		
-//		
-//		
-//		seekbar = (SeekBar) findViewById(R.id.seekBar1);
-//		if(seekbar != null)
-//		{
-//			seekbar.setOnSeekBarChangeListener(this);
-//			vv.setOnPreparedListener(this);
-//		}
-//		vv.setMediaController(mc);
-//
-//		//new loadVideoTask().execute(1);
-
 		Intent myIntent= getIntent();
 		int id = myIntent.getIntExtra("videoId", 1);
-		new loadVideoTask().execute(id);
+		//new loadVideoTask().execute(id);
 
 	}
 	
@@ -88,31 +70,6 @@ public class VideoActivity extends FragmentActivity implements SeekBar.OnSeekBar
 		return true;
 	}
 	
-	@Override
-	public void onProgressChanged(SeekBar seekBar, int progress,
-			boolean fromUser) {
-		// TODO Auto-generated method stub
-		if(fromUser)
-			vv.seekTo(progress);
-	}
-	
-	@Override
-	public void onStartTrackingTouch(SeekBar seekBar) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public void onStopTrackingTouch(SeekBar seekBar) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
-		super.onSaveInstanceState(outState);
-	}
 	
 	protected class loadVideoTask extends AsyncTask<Integer,Void,Video>
 	{

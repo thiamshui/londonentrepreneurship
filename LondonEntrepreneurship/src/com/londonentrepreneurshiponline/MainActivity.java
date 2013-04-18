@@ -6,6 +6,8 @@ import android.animation.LayoutTransition;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -44,34 +46,51 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 		}	
 		setContentView(R.layout.activity_main);
 		setTabLayout();	
+		setViews(1);
 		
 		SearchView searchBar = (SearchView) findViewById(R.id.searchView1);
 		searchBar.setOnQueryTextListener(this);		
 	}
 	
 	public void setViews(int id){
-		switch(id){
-		  case 1: videos = Video.getLatestVideos(); break;
-		  case 2: videos = Video.getFeaturedVideos();break;
-		  case 3: videos = Video.getFeaturedVideos();break;
+		new loadVideoTask().execute(id);
+	}
+	
+	protected class loadVideoTask extends AsyncTask<Integer,Void,Void>
+	{
+		@Override
+		protected Void doInBackground(Integer... params) {
+			switch(params[0]){
+			  case 1: videos = Video.getFeaturedVideos(); break;
+			  case 2: videos = Video.getLatestVideos();break;
+			  case 3: videos = Video.getFeaturedVideos();break;
+			}
+			return null;
 		}
 		
-		
-		int[] imageId = {R.id.imageView1,R.id.imageView2,R.id.imageView3,R.id.imageView4,R.id.imageView5};
-		int[] textId = {R.id.textView1,R.id.textView2,R.id.textView3,R.id.textView4,R.id.textView5};
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			int[] imageId = {R.id.imageView1,R.id.imageView2,R.id.imageView3,R.id.imageView4,R.id.imageView5};
+			int[] textId = {R.id.textView1,R.id.textView2,R.id.textView3,R.id.textView4,R.id.textView5};
 
-		for(int i = 0; i <= imageId.length-1; i++){	
-		   ImageView images = (ImageView) findViewById(imageId[i]);
-		   images.setOnClickListener(this);
-		   Drawable drawable = LoadImage.LoadImageFromWebOperations(videos.get(i).getThumbnail());
-		   
-		   if(i == 0)
-		      drawable = LoadImage.widenImage(drawable,this);
-		   
-           images.setImageDrawable(drawable);
-           TextView textview = (TextView) findViewById(textId[i]);        
-      	   textview.setText(videos.get(i).getTitle());	
-		}  			
+			for(int i = 0; i <= imageId.length-1; i++){	
+			   ImageView images = (ImageView) findViewById(imageId[i]);
+			   images.setOnClickListener(MainActivity.this);
+			   Drawable drawable = LoadImage.LoadImageFromWebOperations(videos.get(i).getThumbnail());
+			   
+			   //if(i == 0)
+			    //  drawable = LoadImage.widenImage(drawable,MainActivity.this);
+			   
+	           images.setImageDrawable(drawable);
+	           TextView textview = (TextView) findViewById(textId[i]);        
+	      	   textview.setText(videos.get(i).getTitle());	
+			}  			
+
+		
+			
+		}
+	
 	}
 	
 	@Override
@@ -104,7 +123,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
         tabs.setOnTabChangedListener(this);
         tabs.addTab(specs);
 		
-        tabs.setCurrentTab(1);
         tabs.setCurrentTab(0);
 	}
 
