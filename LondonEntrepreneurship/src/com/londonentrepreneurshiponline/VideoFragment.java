@@ -32,6 +32,7 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	private TextView caption;
 	private boolean videoFinished = false;
 	private int prevCaptionTime = 0, lastVideoDuration = 0;
+	private Video vid;
 
 	public VideoFragment() {
 		// Required empty public constructor
@@ -62,29 +63,31 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 		vv.setOnCompletionListener(this);
 		
 		vv.setMediaController(mc);
+		
 
 		Intent myIntent= getActivity().getIntent();
-		Video vid = (Video) myIntent.getSerializableExtra("video");
+		vid = (Video) myIntent.getSerializableExtra("video");
 		new loadVideoTask().execute(vid.getId());
+		
+		vv.setVideoURI(Uri.parse(vid.getUri()));
+		if(lastVideoDuration != 0)
+			vv.seekTo(lastVideoDuration);
+		vv.start();
+		
 		return view;
 	}
 
-	protected class loadVideoTask extends AsyncTask<Integer,Void,Video>
-	{
+	protected class loadVideoTask extends AsyncTask<Integer,Void,Void>	{
 		@Override
-		protected Video doInBackground(Integer... params) {
-			Video vid = Video.getVideoById(params[0]);
+		protected Void doInBackground(Integer... params) {
 			annotations = Annotation.getAnnotationsByVideo(params[0]);
-			return vid;
+			return null;
 		}
 
 		@Override
-		protected void onPostExecute(Video result) {
+		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
-			vv.setVideoURI(Uri.parse(result.getUri()));
-			if(lastVideoDuration != 0)
-				vv.seekTo(lastVideoDuration);
-			vv.start();
+			
 
 		}
 	}
@@ -138,6 +141,11 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 		outState.putInt("videoPos",vv.getCurrentPosition());
+	}
+	
+	public void reReadAnnotations()
+	{
+		new loadVideoTask().execute(vid.getId());
 	}
 
 }

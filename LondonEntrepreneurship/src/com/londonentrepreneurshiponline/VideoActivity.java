@@ -19,6 +19,7 @@ public class VideoActivity extends FragmentActivity {
 
 	private Video video;
 	private VideoView vv;
+	private int videoPos = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,10 @@ public class VideoActivity extends FragmentActivity {
 		if (((MainApplication) getApplication()).getLoggedOnUser() != -1)
 			startAnnotateText();
 		else
+		{
+			videoPos = vv.getCurrentPosition();
 			startActivityForResult(new Intent(this, Login.class), 1);
+		}
 	}
 	
 	@Override
@@ -79,7 +83,10 @@ public class VideoActivity extends FragmentActivity {
 	private void startAnnotateText()
 	{
 		Intent intent = new Intent(this, AnnotateTextActivity.class);
-		intent.putExtra("pos", vv.getCurrentPosition());
+		if(vv.getCurrentPosition() != 0)
+			intent.putExtra("pos", vv.getCurrentPosition());
+		else
+			intent.putExtra("pos", videoPos);
 		intent.putExtra("videoId", video.getId());
 		startActivity(intent);
 	}
@@ -92,13 +99,16 @@ public class VideoActivity extends FragmentActivity {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 		outState.putSerializable("video", video);
+		outState.putInt("videoPos", videoPos);
 	}
 	
 	@Override
 	protected void onRestart() {
 		// TODO Auto-generated method stub
 		super.onRestart();
-		Log.d("test","RESTART");
+		FragmentManager fm = getSupportFragmentManager();
+		VideoFragment f = (VideoFragment) fm.findFragmentById(R.id.fragment1);
+		f.reReadAnnotations();
 	}
 
 }
