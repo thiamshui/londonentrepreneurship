@@ -35,7 +35,9 @@ public class Login extends Activity {
 	{
 		EditText passText = (EditText) findViewById(R.id.tpassword);
 		EditText usernameText = (EditText) findViewById(R.id.tusername);
-		
+		Button btn = (Button) findViewById(R.id.signin);
+		btn.setText("Signing In...");
+		btn.setEnabled(false);
 		new authenticateTask().execute(usernameText.getText().toString(),md5(passText.getText().toString()));
 				
 	}
@@ -79,6 +81,10 @@ public class Login extends Activity {
 			{
 				// Shake animation reference: http://stackoverflow.com/questions/10956454/android-r-anim-shake-not-found
 				// http://www.edumobile.org/android/android-programming-tutorials/shake-animation-example/
+				Button btn = (Button) findViewById(R.id.signin);
+				btn.setText("SIGN IN");
+				btn.setEnabled(true);
+				
 				Animation shake = AnimationUtils.loadAnimation(Login.this, R.anim.shake);
 				findViewById(R.id.tpassword).startAnimation(shake);
 				findViewById(R.id.tusername).startAnimation(shake);
@@ -90,7 +96,8 @@ public class Login extends Activity {
 			{
 				Toast.makeText(Login.this, "Sign-in Successful", 5000).show();
 				
-				setResult(RESULT_OK,new Intent().putExtra("user", result.getUsername()));
+				((MainApplication) Login.this.getApplication()).setLoggedOnUser(result.getId());
+				setResult(RESULT_OK,new Intent());
 				finish();
 			}
 

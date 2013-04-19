@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
@@ -90,7 +91,7 @@ public class Video implements Serializable{
 	
 	public static ArrayList<Video> searchVideos(String searchStr)
 	{
-		return getVideosByUrl("http://saturn.thiamshui.net/video.php?search=" + searchStr);
+		return getVideosByUrl("http://saturn.thiamshui.net/video.php?search=" + Uri.encode(searchStr));
 	}
 
 	public static Video getVideoById(int id) {
