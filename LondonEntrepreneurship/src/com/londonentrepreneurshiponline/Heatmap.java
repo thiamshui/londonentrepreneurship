@@ -14,6 +14,9 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
+
+import com.londonentrepreneurshiponline.models.Video;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
@@ -34,20 +37,10 @@ public class Heatmap extends Activity {
 		setContentView(R.layout.activity_heatmap);
 		
 		// Getting reference to the button btn_chart
-        Button btnChart = (Button) findViewById(R.id.btn_chart);
+		Video vid = (Video) getIntent().getSerializableExtra("video");
+		int durationMs = getIntent().getIntExtra("videoDur", -1);
+		openChart();
         
-     // Defining click event listener for the button btn_chart
-        OnClickListener clickListener = new OnClickListener() {
- 
-            @Override
-            public void onClick(View v) {
-                
-                openChart();
-            }
-        };
- 
-       
-        btnChart.setOnClickListener(clickListener);
 	}
 
 	private void openChart(){

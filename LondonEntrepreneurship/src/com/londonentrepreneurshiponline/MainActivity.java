@@ -164,7 +164,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 		@Override
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
-			
+			Log.d("test","LENGTH:" + videos.size());
 			for(int i = 0; i <= imageId.length-1; i++){	
 			   ImageView image = (ImageView) findViewById(imageId[i]);
 			   image.setOnClickListener(MainActivity.this);		   

@@ -83,6 +83,16 @@ public class VideoActivity extends FragmentActivity {
 			startActivityForResult(new Intent(this, Login.class), 2);
 	}
 	
+	public void launchHeatMap(View v)
+	{
+		Intent in = new Intent(this,Heatmap.class);
+		in.putExtra("video", video);
+		in.putExtra("videoDur", vv.getDuration());
+		
+		
+		startActivity(in);
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
