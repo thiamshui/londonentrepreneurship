@@ -14,6 +14,9 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
+
+import com.londonentrepreneurshiponline.models.Video;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
@@ -51,12 +54,17 @@ public class Heatmap extends Activity {
 	}
 
 	private void openChart(){
-	
+		
+		Video videoObject = new Video();
+		Video newVid = videoObject.getVideoById(11);
+		
+		
 		// divide the video into 20 different parts, and creates heatmap
 		// 20 different bars
 		int[] x = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19 };
-		int[] clicks = {21,12,12,32,15,30,23,25,11,9,6,17,9,17,13,22,25,31,
-				21,30};
+		
+		Video clicksObject = new Video();
+		int[] clicks = clicksObject.getImportanceArray();
 		
 		
 //		for(int a = 0; a<= secs.length; a++){
