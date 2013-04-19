@@ -87,6 +87,9 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 		@Override
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
+
+			Handler handler = new Handler();
+			handler.postDelayed(updateAnnotations, 1000);
 			
 
 		}
@@ -96,8 +99,6 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	public void onPrepared(MediaPlayer mp) {
 		// TODO Auto-generated method stub
 		caption.setVisibility(View.INVISIBLE);
-		Handler handler = new Handler();
-		handler.postDelayed(updateAnnotations, 1000);
 	}
 	
 	@Override
