@@ -2,13 +2,16 @@ package com.londonentrepreneurshiponline;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.londonentrepreneurshiponline.annotate.AnnotateTextActivity;
 import com.londonentrepreneurshiponline.models.Video;
@@ -16,6 +19,8 @@ import com.londonentrepreneurshiponline.models.Video;
 public class VideoActivity extends FragmentActivity {
 
 	private Video video;
+	private VideoView vv;
+	private int videoPos = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,11 @@ public class VideoActivity extends FragmentActivity {
 			title.setText(video.getTitle());
 			desc.setText(video.getDesc());
 		}
+		
+		FragmentManager fm = getSupportFragmentManager();
+		VideoFragment f = (VideoFragment) fm.findFragmentById(R.id.fragment1);
+		vv = f.vv;
+		
 	}
 
 	@Override
@@ -50,25 +60,46 @@ public class VideoActivity extends FragmentActivity {
 	}
 
 	public void annotateText(View v) {
-		Intent intent = new Intent(this, AnnotateTextActivity.class);
+		
 		if (((MainApplication) getApplication()).getLoggedOnUser() != -1)
-			startActivity(intent);
+			startAnnotateText();
 		else
+		{
+			videoPos = vv.getCurrentPosition();
 			startActivityForResult(new Intent(this, Login.class), 1);
+		}
 	}
 
+	public void annotateImpt(View v) {
+		if (((MainApplication) getApplication()).getLoggedOnUser() != -1)
+		{
+			int segment = vv.getCurrentPosition() / vv.getDuration() * 19;
+			new annotateImportanceTask().execute(segment,video.getId());
+		}
+		else
+			startActivityForResult(new Intent(this, Login.class), 2);
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		if (requestCode == 1) // annotate Text
 		{
 			if (resultCode == RESULT_OK) {
-				startActivity(new Intent(this, AnnotateTextActivity.class));
+				startAnnotateText();
 			}
 		}
 	}
-
-	public void annotateImpt(View v) {
+	
+	private void startAnnotateText()
+	{
+		Intent intent = new Intent(this, AnnotateTextActivity.class);
+		if(vv.getCurrentPosition() != 0)
+			intent.putExtra("pos", vv.getCurrentPosition());
+		else
+			intent.putExtra("pos", videoPos);
+		intent.putExtra("videoId", video.getId());
+		startActivity(intent);
 	}
 
 	@Override
@@ -76,5 +107,29 @@ public class VideoActivity extends FragmentActivity {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 		outState.putSerializable("video", video);
+		outState.putInt("videoPos", videoPos);
+	}
+	
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+		FragmentManager fm = getSupportFragmentManager();
+		VideoFragment f = (VideoFragment) fm.findFragmentById(R.id.fragment1);
+		f.reReadAnnotations();
+	}
+	
+	protected class annotateImportanceTask extends AsyncTask<Integer,Void,Void>	{
+		@Override
+		protected Void doInBackground(Integer... params) {
+			Video.saveImportance(params[0] + 1, params[1]);
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			Toast.makeText(VideoActivity.this, "Annotation Saved.", 5000).show();
+		}
 	}
 }
