@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
@@ -28,14 +29,17 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
     boolean bool = false;
     int[] imageId = {R.id.imageView1,R.id.imageView2,R.id.imageView3,R.id.imageView4,R.id.imageView5};
 	int[] textId = {R.id.textView1,R.id.textView2,R.id.textView3,R.id.textView4,R.id.textView5};
+	SearchView searchBar;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setTabLayout();
-		SearchView searchBar = (SearchView) findViewById(R.id.searchView1);
-		searchBar.setOnQueryTextListener(this);		
+		searchBar = (SearchView) findViewById(R.id.searchView1);
+		searchBar.setIconified(false);
+		searchBar.setOnQueryTextListener(this);	
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 	}
 
 	public void setViews(int id){
@@ -133,6 +137,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 		Log.d("search",arg0);
 		Intent myIntent = new Intent(this, SearchList.class);
 		myIntent.putExtra("Query", arg0);
+		searchBar.setQuery("", false);
 		startActivity(myIntent);
 		return false;
     }

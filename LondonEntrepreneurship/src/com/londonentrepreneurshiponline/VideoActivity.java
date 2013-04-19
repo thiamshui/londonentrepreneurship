@@ -57,13 +57,10 @@ public class VideoActivity extends FragmentActivity implements OnPreparedListene
 	}
 
 
-
-
 	public void annotateText(View v)
 	{
 		Intent intent = new Intent(this,AnnotateTextActivity.class);
 		startActivity(intent);
-
 	}
 
 	public void annotateImpt()

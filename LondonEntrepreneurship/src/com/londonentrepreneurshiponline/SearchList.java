@@ -50,7 +50,7 @@ public class SearchList extends Activity implements View.OnClickListener {
 	
 		Intent myIntent= getIntent();
 		String query = myIntent.getStringExtra("Query");
-		new loadImages().execute(query);		
+		new loadImages().execute(query);
 	}
 
 	@Override
@@ -66,15 +66,16 @@ public class SearchList extends Activity implements View.OnClickListener {
 	}
 	
 	protected class loadImages extends AsyncTask<String, Void, Drawable[] >{
-		
+		String query;
 		protected Drawable[] doInBackground(String... params) {
-			videos = Video.searchVideos(params[0]);
-			Drawable[] singleImage = new Drawable[videos.size()];
-			
-			for(int i = 0; i<= videos.size()-1; i++){			
-				singleImage[i] = LoadImage.LoadImageFromWebOperations(videos.get(i).getThumbnail());
-			}
-			return singleImage;
+			query = params[0];
+			videos = Video.searchVideos(query);
+				Drawable[] singleImage = new Drawable[videos.size()];
+				for(int i = 0; i<= videos.size()-1; i++){			
+					singleImage[i] = LoadImage.LoadImageFromWebOperations(videos.get(i).getThumbnail());
+				}
+				return singleImage;
+
 		}
 		
 		protected void onPostExecute(Drawable[] singleImage){
@@ -93,35 +94,51 @@ public class SearchList extends Activity implements View.OnClickListener {
 			sv.setLayoutParams(params);
 			LinearLayout ll = new LinearLayout(SearchList.this);	
 			ll.setOrientation(LinearLayout.VERTICAL);
-			sv.addView(ll);
+			
 
+			if(videos.size() == 0){
+				paramsText.gravity = 17;
+				paramsText.topMargin =50;
+			    TextView textview = new TextView(SearchList.this);
+			    textview.setText("No video results found for '" + query + "'");
+			    textview.setLayoutParams(paramsText);
+			    ll.addView(textview);
+			    SearchList.this.setContentView(ll);
+			} 
+			 else {
+				 TextView displayQuery = new TextView(SearchList.this);
+				 displayQuery.setText("Search Results for '" + query + "'");
+				 displayQuery.setLayoutParams(paramsText);
+				 paramsText.gravity =17;
+				 ll.addView(displayQuery);
+				 sv.addView(ll);
+      			for (int i = 0; i <= videos.size() - 1; i++) {
+      				Log.d("here", "now");
+					LinearLayout row = new LinearLayout(SearchList.this);
+					row.setLayoutParams(new LayoutParams(
+					LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT));
 
-			for(int i = 0; i<= videos.size()-1; i++){
-			  LinearLayout row = new LinearLayout(SearchList.this);
-	          row.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-	                       
-	                rowImages = new ImageView(SearchList.this);
-				    rowImages.setId(i);
-				    String uri = (videos.get(i).getThumbnail());
-				    rowImages.setTag(uri);
-				    //drawable = LoadImage.LoadImageFromWebOperations(uri);
-				    rowImages.setImageDrawable(singleImage[i]);   
-
-				    rowImages.setLayoutParams(params);
-				    row.addView(rowImages);
-				    rowImages.setOnClickListener(SearchList.this);
-
-				    TextView textview = new TextView(SearchList.this);        
-		      	    textview.setText(videos.get(i).getTitle());
-		      	    textview.setId(i);
-		      	    textview.setLayoutParams(paramsText);
-		      	    textview.setOnClickListener(SearchList.this);
-		      	    row.addView(textview);
-
-		      	    ll.addView(row);
-
+					rowImages = new ImageView(SearchList.this);
+					rowImages.setId(i);
+					rowImages.setTag(videos.get(i).getThumbnail());
+					rowImages.setImageDrawable(singleImage[i]);
+					rowImages.setLayoutParams(params);
+					rowImages.setOnClickListener(SearchList.this);
+					row.addView(rowImages);
+					
+					TextView textview = new TextView(SearchList.this);
+					textview.setText(videos.get(i).getTitle());
+					textview.setId(i);
+					textview.setLayoutParams(paramsText);
+					textview.setOnClickListener(SearchList.this);
+					row.addView(textview);
+					ll.addView(row);
+					
+					SearchList.this.setContentView(sv);
+				}
+				
 			}
-			SearchList.this.setContentView(sv);			
 		}
 		
 	}
