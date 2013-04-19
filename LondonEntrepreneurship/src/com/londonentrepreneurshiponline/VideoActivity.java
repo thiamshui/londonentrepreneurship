@@ -110,5 +110,4 @@ public class VideoActivity extends FragmentActivity {
 		VideoFragment f = (VideoFragment) fm.findFragmentById(R.id.fragment1);
 		f.reReadAnnotations();
 	}
-
 }
