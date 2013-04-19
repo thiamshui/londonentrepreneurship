@@ -25,6 +25,7 @@
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:background="#44000000"
+        android:text="Loading..."
         android:textColor="@color/white"
         android:onClick="captionTouch" />
 

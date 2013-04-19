@@ -1,7 +1,5 @@
 package com.londonentrepreneurshiponline;
 
-import java.util.HashMap;
-
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -12,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +28,10 @@ import com.londonentrepreneurshiponline.models.Video;
 public class VideoFragment extends Fragment implements OnPreparedListener,OnCompletionListener {
 
 	private VideoView vv;
-	private HashMap<Integer,String> annotations;
+	private SparseArray<String> annotations;
 	private TextView caption;
 	private boolean videoFinished = false;
-	private int prevCaptionTime = 0;
+	private int prevCaptionTime = 0, lastVideoDuration = 0;
 
 	public VideoFragment() {
 		// Required empty public constructor
@@ -42,6 +41,10 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		
+		if(savedInstanceState != null)
+			lastVideoDuration = savedInstanceState.getInt("videoPos");
+			
 	}
 
 	@Override
@@ -51,6 +54,7 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 
 		vv = (VideoView) view.findViewById(R.id.videoView1);
 		caption = (TextView) view.findViewById(R.id.textView1);
+		
 		MediaController mc = new MediaController(view.getContext());
 		mc.setMediaPlayer(vv);
 
@@ -59,7 +63,6 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 		
 		vv.setMediaController(mc);
 
-//		return inflater.inflate(R.layout.fragment_video, container, false);
 		Intent myIntent= getActivity().getIntent();
 		Video vid = (Video) myIntent.getSerializableExtra("video");
 		Log.d("test",vid.getDesc());
@@ -80,6 +83,8 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 		protected void onPostExecute(Video result) {
 			// TODO Auto-generated method stub
 			vv.setVideoURI(Uri.parse(result.getUri()));
+			if(lastVideoDuration != 0)
+				vv.seekTo(lastVideoDuration);
 			vv.start();
 
 		}
@@ -88,7 +93,7 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	@Override
 	public void onPrepared(MediaPlayer mp) {
 		// TODO Auto-generated method stub
-		vv.getCurrentPosition();
+		caption.setVisibility(View.INVISIBLE);
 		Handler handler = new Handler();
 		handler.postDelayed(updateAnnotations, 1000);
 	}
@@ -107,11 +112,15 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 			if((text = annotations.get(currentPos)) != null)
 			{
 				caption.setText(text);
+				caption.setVisibility(View.VISIBLE);
 				prevCaptionTime = currentPos;
 			}
 			
 			if(currentPos < prevCaptionTime || currentPos - prevCaptionTime > 5)
+			{
 				caption.setText("");
+				caption.setVisibility(View.INVISIBLE);
+			}
 			
 			if(!videoFinished)
 			{
@@ -123,6 +132,13 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	public void captionTouch()
 	{
 		Log.d("test","TOUCH");
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+		outState.putInt("videoPos",vv.getCurrentPosition());
 	}
 
 }
