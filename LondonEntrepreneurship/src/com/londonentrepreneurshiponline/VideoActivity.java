@@ -2,6 +2,7 @@ package com.londonentrepreneurshiponline;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.londonentrepreneurshiponline.annotate.AnnotateTextActivity;
@@ -67,6 +69,16 @@ public class VideoActivity extends FragmentActivity {
 			startActivityForResult(new Intent(this, Login.class), 1);
 		}
 	}
+
+	public void annotateImpt(View v) {
+		if (((MainApplication) getApplication()).getLoggedOnUser() != -1)
+		{
+			int segment = vv.getCurrentPosition() / vv.getDuration() * 19;
+			new annotateImportanceTask().execute(segment,video.getId());
+		}
+		else
+			startActivityForResult(new Intent(this, Login.class), 2);
+	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -90,9 +102,6 @@ public class VideoActivity extends FragmentActivity {
 		startActivity(intent);
 	}
 
-	public void annotateImpt(View v) {
-	}
-
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
@@ -108,5 +117,19 @@ public class VideoActivity extends FragmentActivity {
 		FragmentManager fm = getSupportFragmentManager();
 		VideoFragment f = (VideoFragment) fm.findFragmentById(R.id.fragment1);
 		f.reReadAnnotations();
+	}
+	
+	protected class annotateImportanceTask extends AsyncTask<Integer,Void,Void>	{
+		@Override
+		protected Void doInBackground(Integer... params) {
+			Video.saveImportance(params[0] + 1, params[1]);
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			Toast.makeText(VideoActivity.this, "Annotation Saved.", 5000).show();
+		}
 	}
 }
