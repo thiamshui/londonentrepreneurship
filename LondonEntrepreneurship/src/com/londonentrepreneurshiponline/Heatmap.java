@@ -92,7 +92,7 @@ public class Heatmap extends Activity {
         allclicks.setXTitle("Number of seconds (s)");
         allclicks.setXLabels(0);
         allclicks.setAxisTitleTextSize(24);
-        allclicks.setLabelsTextSize(5);
+        allclicks.setLabelsTextSize(10);
         allclicks.setYTitle("Importance (Clicks)");
         allclicks.setZoomButtonsVisible(false);
         for(int i=0; i< x.length;i++){
@@ -104,7 +104,7 @@ public class Heatmap extends Activity {
         allclicks.setSelectableBuffer(100);
         Intent intent = ChartFactory.getBarChartIntent(getBaseContext(), dataset, allclicks, Type.DEFAULT);
         startActivity(intent);
-        myChartView = ChartFactory.getBarChartView(getBaseContext(), dataset, allclicks, Type.DEFAULT);
+        myChartView = ChartFactory.getBarChartView(this, dataset, allclicks, Type.DEFAULT);
         myChartView.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -124,7 +124,7 @@ public class Heatmap extends Activity {
 			}
 		});
         //startActivity(intent);
-        myChartView.repaint();
+        //myChartView.repaint();
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
