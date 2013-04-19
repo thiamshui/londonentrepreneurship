@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.londonentrepreneurshiponline.annotate.AnnotateTextActivity;
 import com.londonentrepreneurshiponline.models.Video;
@@ -16,6 +18,7 @@ import com.londonentrepreneurshiponline.models.Video;
 public class VideoActivity extends FragmentActivity {
 
 	private Video video;
+	private VideoView vv;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,11 @@ public class VideoActivity extends FragmentActivity {
 			title.setText(video.getTitle());
 			desc.setText(video.getDesc());
 		}
+		
+		FragmentManager fm = getSupportFragmentManager();
+		VideoFragment f = (VideoFragment) fm.findFragmentById(R.id.fragment1);
+		vv = f.vv;
+		
 	}
 
 	@Override
@@ -50,22 +58,30 @@ public class VideoActivity extends FragmentActivity {
 	}
 
 	public void annotateText(View v) {
-		Intent intent = new Intent(this, AnnotateTextActivity.class);
+		
 		if (((MainApplication) getApplication()).getLoggedOnUser() != -1)
-			startActivity(intent);
+			startAnnotateText();
 		else
 			startActivityForResult(new Intent(this, Login.class), 1);
 	}
-
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		if (requestCode == 1) // annotate Text
 		{
 			if (resultCode == RESULT_OK) {
-				startActivity(new Intent(this, AnnotateTextActivity.class));
+				startAnnotateText();
 			}
 		}
+	}
+	
+	private void startAnnotateText()
+	{
+		Intent intent = new Intent(this, AnnotateTextActivity.class);
+		intent.putExtra("pos", vv.getCurrentPosition());
+		intent.putExtra("videoId", video.getId());
+		startActivity(intent);
 	}
 
 	public void annotateImpt(View v) {
@@ -76,6 +92,13 @@ public class VideoActivity extends FragmentActivity {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 		outState.putSerializable("video", video);
+	}
+	
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+		Log.d("test","RESTART");
 	}
 
 }

@@ -1,18 +1,18 @@
 package com.londonentrepreneurshiponline.annotate;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.londonentrepreneurshiponline.MainApplication;
 import com.londonentrepreneurshiponline.R;
+import com.londonentrepreneurshiponline.models.Annotation;
 
 public class AnnotateTextActivity extends Activity {
-	
-	Button saving, discarding;
-	EditText saveAnnot, annotate;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,27 +28,6 @@ public class AnnotateTextActivity extends Activity {
 //				annotate.setBackgroundColor(getResources().getColor(android.R.color.));
 //			}
 //		});
-		saving = (Button) findViewById(R.id.Bsave);
-		saving.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-				saveAnnot = (EditText) findViewById(R.id.textAnnot);
-				String newAnnot = saveAnnot.getText().toString();
-			}
-		});
-		
-		discarding = (Button) findViewById(R.id.Bdiscard);
-		discarding.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				finish();
-			}
-		});
 	}
  
 	@Override
@@ -57,5 +36,43 @@ public class AnnotateTextActivity extends Activity {
 		getMenuInflater().inflate(R.menu.annotate_text, menu);
 		return true;
 	}
+	
+	public void discard(View v)
+	{
+		finish();
+	}
+	
+	public void save(View v)
+	{
+		EditText saveAnnot = (EditText) findViewById(R.id.textAnnot);
+		String text = saveAnnot.getText().toString();
+		int timeSecs = getIntent().getIntExtra("pos", -1) / 1000;
+		int userID = ((MainApplication) getApplication()).getLoggedOnUser();
+		int videoId = getIntent().getIntExtra("videoId",-1);
+		new createAnnotationTask().execute(text, timeSecs, userID, videoId);
+		
+		
+	}
+	
+	protected class createAnnotationTask extends AsyncTask<Object,Void,String>
+	{
+		@Override
+		protected String doInBackground(Object... params) {
+			
+			return Annotation.createAnnotation((String) params[0], (Integer) params[1], (Integer) params[2], (Integer) params[3]);
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+			Toast toast = Toast.makeText(AnnotateTextActivity.this, "Annotation Saved.", 5000);
+			toast.show();
+			finish();
+			
+			
+		}  			
+	}
+	
+	
 
 }

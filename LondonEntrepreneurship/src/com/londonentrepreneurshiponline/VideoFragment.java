@@ -27,7 +27,7 @@ import com.londonentrepreneurshiponline.models.Video;
  */
 public class VideoFragment extends Fragment implements OnPreparedListener,OnCompletionListener {
 
-	private VideoView vv;
+	VideoView vv;
 	private SparseArray<String> annotations;
 	private TextView caption;
 	private boolean videoFinished = false;
@@ -65,7 +65,6 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 
 		Intent myIntent= getActivity().getIntent();
 		Video vid = (Video) myIntent.getSerializableExtra("video");
-		Log.d("test",vid.getDesc());
 		new loadVideoTask().execute(vid.getId());
 		return view;
 	}
