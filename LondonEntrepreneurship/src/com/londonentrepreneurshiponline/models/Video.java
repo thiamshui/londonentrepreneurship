@@ -309,7 +309,10 @@ public class Video implements Serializable{
 	
 	public static void saveImportance(int segment, int videoId)
 	{
-		WSClient.httpGET("http://saturn.thiamshui.net/video.php?segment=" + segment + "&videoId=" + videoId);
+		if(segment < 10)
+			WSClient.httpGET("http://saturn.thiamshui.net/video.php?segment=0" + segment + "&videoId=" + videoId);
+		else
+			WSClient.httpGET("http://saturn.thiamshui.net/video.php?segment=" + segment + "&videoId=" + videoId);
 	}
 	
 }
