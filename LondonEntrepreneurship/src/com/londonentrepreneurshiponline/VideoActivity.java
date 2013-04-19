@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -73,11 +74,23 @@ public class VideoActivity extends FragmentActivity {
 	public void annotateImpt(View v) {
 		if (((MainApplication) getApplication()).getLoggedOnUser() != -1)
 		{
-			int segment = vv.getCurrentPosition() / vv.getDuration() * 19;
+			double curPos = vv.getCurrentPosition(), duration = vv.getDuration();
+			int segment = (int) (curPos / duration * 19);
+			Log.d("test","CUR " + vv.getCurrentPosition() + " TOTAL " + vv.getDuration());
 			new annotateImportanceTask().execute(segment,video.getId());
 		}
 		else
 			startActivityForResult(new Intent(this, Login.class), 2);
+	}
+	
+	public void launchHeatMap(View v)
+	{
+		Intent in = new Intent(this,Heatmap.class);
+		in.putExtra("video", video);
+		in.putExtra("videoDur", vv.getDuration());
+		
+		
+		startActivity(in);
 	}
 	
 	@Override
@@ -88,6 +101,10 @@ public class VideoActivity extends FragmentActivity {
 			if (resultCode == RESULT_OK) {
 				startAnnotateText();
 			}
+		}
+		if(requestCode == 2)
+		{
+			vv.start();
 		}
 	}
 	

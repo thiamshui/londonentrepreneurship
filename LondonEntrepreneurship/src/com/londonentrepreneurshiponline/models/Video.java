@@ -283,33 +283,12 @@ public class Video implements Serializable{
 		return new int[] { i01, i02, i03, i04, i05, i06, i07, i08, i09, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i20 };
 	}
 	
-
-	protected class asyncVideos extends AsyncTask<String,Void,ArrayList<Video>>{
-		
-		@Override
-		protected ArrayList<Video> doInBackground(String... params) {
-			GsonBuilder gsonb = new GsonBuilder();
-			Gson gson = gsonb.create();
-
-			Type vidCollection = new TypeToken<ArrayList<Video>>() {}.getType();
-			ArrayList<Video> videos = null;
-
-			String json = WSClient.httpGET(params[0]);
-			videos = gson.fromJson(json, vidCollection);
-			return videos;
-		}
-		
-		@Override
-		protected void onPostExecute(ArrayList<Video> result) {
-			// TODO Auto-generated method stub
-			
-			
-		}
-	}
-	
 	public static void saveImportance(int segment, int videoId)
 	{
-		WSClient.httpGET("http://saturn.thiamshui.net/video.php?segment=" + segment + "&videoId=" + videoId);
+		if(segment < 10)
+			WSClient.httpGET("http://saturn.thiamshui.net/video.php?segment=0" + segment + "&videoId=" + videoId);
+		else
+			WSClient.httpGET("http://saturn.thiamshui.net/video.php?segment=" + segment + "&videoId=" + videoId);
 	}
 	
 }
