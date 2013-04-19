@@ -85,6 +85,20 @@ public class Annotation {
 		
 		return map;
 	}
+	
+	public static ArrayList<Annotation> getAnnotationsListByVideo(int id)
+	{
+		GsonBuilder gsonb = new GsonBuilder();
+		Gson gson = gsonb.create();
+
+		Type vidCollection = new TypeToken<ArrayList<Annotation>>() {}.getType();
+		ArrayList<Annotation> annotations = null;
+		
+		String json = WSClient.httpGET("http://saturn.thiamshui.net/annotation.php?id=" + id);
+		annotations = gson.fromJson(json, vidCollection);
+		
+		return annotations;
+	}
 
 	public static String createAnnotation(String text, int timeSecs, int userID, int videoId)
 	{
