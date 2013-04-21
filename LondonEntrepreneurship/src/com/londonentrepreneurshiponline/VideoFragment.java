@@ -30,7 +30,7 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	VideoView vv;
 	private SparseArray<String> annotations;
 	private TextView caption;
-	private boolean videoFinished = false;
+	private boolean videoFinished;
 	private int prevCaptionTime = 0, lastVideoDuration = 0;
 	private Video vid;
 
@@ -42,6 +42,7 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		videoFinished = false;
 		
 		if(savedInstanceState != null)
 			lastVideoDuration = savedInstanceState.getInt("videoPos");
@@ -67,7 +68,6 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 
 		Intent myIntent= getActivity().getIntent();
 		vid = (Video) myIntent.getSerializableExtra("video");
-		new loadVideoTask().execute(vid.getId());
 		
 		vv.setVideoURI(Uri.parse(vid.getUri()));
 		if(lastVideoDuration != 0)
@@ -96,7 +96,9 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	@Override
 	public void onPrepared(MediaPlayer mp) {
 		// TODO Auto-generated method stub
-		caption.setVisibility(View.INVISIBLE);
+		if(caption.getText().equals("Loading..."))
+			caption.setVisibility(View.INVISIBLE);
+		new loadVideoTask().execute(vid.getId());
 	}
 	
 	@Override
@@ -109,9 +111,16 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 		public void run()
 		{
 			int currentPos = vv.getCurrentPosition() / 1000;
+			Log.d("test","CPOS:" + currentPos);
 			String text = "";
 			if((text = annotations.get(currentPos)) != null)
 			{
+				if(text.length() > 25)
+				{
+					text = text.substring(0,25);
+					text += "...";
+				}	
+				
 				caption.setText(text);
 				caption.setVisibility(View.VISIBLE);
 				prevCaptionTime = currentPos;
@@ -139,12 +148,18 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	public void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
+		setVideoFinished();
 		outState.putInt("videoPos",vv.getCurrentPosition());
 	}
 	
 	public void reReadAnnotations()
 	{
 		new loadVideoTask().execute(vid.getId());
+	}
+	
+	public void setVideoFinished()
+	{
+		videoFinished = true;
 	}
 
 }

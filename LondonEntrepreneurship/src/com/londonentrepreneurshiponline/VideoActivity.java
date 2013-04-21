@@ -22,6 +22,7 @@ public class VideoActivity extends FragmentActivity {
 	private Video video;
 	private VideoView vv;
 	private int videoPos = 0;
+	private VideoFragment fragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +49,8 @@ public class VideoActivity extends FragmentActivity {
 		}
 		
 		FragmentManager fm = getSupportFragmentManager();
-		VideoFragment f = (VideoFragment) fm.findFragmentById(R.id.fragment1);
-		vv = f.vv;
+		fragment = (VideoFragment) fm.findFragmentById(R.id.fragment1);
+		vv = fragment.vv;
 		
 	}
 
@@ -125,15 +126,14 @@ public class VideoActivity extends FragmentActivity {
 		super.onSaveInstanceState(outState);
 		outState.putSerializable("video", video);
 		outState.putInt("videoPos", videoPos);
+		fragment.setVideoFinished();
 	}
 	
 	@Override
 	protected void onRestart() {
 		// TODO Auto-generated method stub
 		super.onRestart();
-		FragmentManager fm = getSupportFragmentManager();
-		VideoFragment f = (VideoFragment) fm.findFragmentById(R.id.fragment1);
-		f.reReadAnnotations();
+		fragment.reReadAnnotations();
 	}
 	
 	protected class annotateImportanceTask extends AsyncTask<Integer,Void,Void>	{
@@ -148,5 +148,12 @@ public class VideoActivity extends FragmentActivity {
 			// TODO Auto-generated method stub
 			Toast.makeText(VideoActivity.this, "Annotation Saved.", 5000).show();
 		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		fragment.setVideoFinished();
 	}
 }
