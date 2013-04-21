@@ -97,7 +97,6 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	public void onPrepared(MediaPlayer mp) {
 		// TODO Auto-generated method stub
 		caption.setVisibility(View.INVISIBLE);
-		
 	}
 	
 	@Override
