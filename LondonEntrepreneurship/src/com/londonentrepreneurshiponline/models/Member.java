@@ -50,5 +50,23 @@ public class Member {
 			return null;
 		}
 	}
+	
+	public static String getUsernameById(int id)
+	{
+		String jsonString = "";
+		GsonBuilder gsonb = new GsonBuilder();
+		Gson gson = gsonb.create();
+
+		jsonString = WSClient.httpGET("http://saturn.thiamshui.net/member.php?id=" + id);
+		try
+		{
+			Member m = (Member) gson.fromJson(jsonString, Member.class);
+			return m.getUsername();
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+	}
 
 }
