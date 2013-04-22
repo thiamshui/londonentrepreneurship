@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/overall"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <TextView
-            android:id="@+id/textview0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
     
     <View
+         android:id="@+id/view0"
          android:layout_width="fill_parent"
          android:layout_height="1dip"
          android:layout_marginTop="5dp"
@@ -33,35 +31,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" 
             android:text="Annotaton"
-            android:layout_marginLeft="70dp"
+            android:layout_marginLeft="20dp"
             android:gravity="center"/>
 
-        <TextView
-            android:id="@+id/textview3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Username" 
-            android:layout="@+id/textview2"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="20dp"
-            android:gravity="right"/>
     </LinearLayout>
 
      <View
+         android:id="@+id/view1"
          android:layout_width="fill_parent"
          android:layout_height="1dip"
          android:layout_marginTop="5dp"
          android:background="#D3D3D3" />
     
-    <GridView 
+    <ScrollView 
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:id="@+id/scrollview1"       
+        ></ScrollView>
+    
+    <!-- <GridView 
     android:id="@+id/gridView1"
     android:numColumns="auto_fit"
     android:layout_below="@+id/layout1"
     android:gravity="center"
-    android:columnWidth="100dp"
     android:stretchMode="columnWidth"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    ></GridView>
+    ></GridView> -->
 
 </LinearLayout>

@@ -1,9 +1,13 @@
 package com.londonentrepreneurshiponline.models;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.google.gson.Gson;
@@ -17,6 +21,24 @@ public class Annotation {
 	private String text;
 	private int votes;
 	private int timeSecs;
+	private int userID;
+	private int videoId;
+	
+	public void setVideoId(int videoId) {
+		this.videoId = videoId;
+	}
+	
+	public int getVideoId() {
+		return videoId;
+	}
+	
+	public int getUserID() {
+		return userID;
+	}
+	
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
 	
 	public int getId() {
 		return id;
@@ -62,6 +84,30 @@ public class Annotation {
 		}
 		
 		return map;
+	}
+	
+	public static ArrayList<Annotation> getAnnotationsListByVideo(int id)
+	  {
+	    GsonBuilder gsonb = new GsonBuilder();
+	    Gson gson = gsonb.create();
+	
+	    Type vidCollection = new TypeToken<ArrayList<Annotation>>() {}.getType();
+	    ArrayList<Annotation> annotations = null;
+	    
+	    String json = WSClient.httpGET("http://saturn.thiamshui.net/annotation.php?id=" + id);
+	    annotations = gson.fromJson(json, vidCollection);
+	    
+	    return annotations;
+	  }
+
+	public static String createAnnotation(String text, int timeSecs, int userID, int videoId)
+	{
+		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("text", text));
+		params.add(new BasicNameValuePair("timeSecs", ""+timeSecs));
+		params.add(new BasicNameValuePair("videoId",""+videoId));
+		params.add(new BasicNameValuePair("userID",""+userID));
+		return WSClient.httpPOST("http://venus.thiamshui.net/annotation.php", params);
 	}
 	
 

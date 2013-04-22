@@ -68,14 +68,23 @@
         android:layout_toRightOf="@+id/imageButton2"
         android:text="Heat Map" />
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button3"
+        android:layout_alignBottom="@+id/button3"
+        android:layout_toRightOf="@+id/button3"
+        android:onClick="annotationList"
+        android:text="Annotations" />
+
     <ImageButton
         android:id="@+id/imageButton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="14dp"
-        android:src="@android:drawable/ic_menu_edit"
-        android:onClick="annotateText" />
+        android:onClick="annotateText"
+        android:src="@android:drawable/ic_menu_edit" />
 
 </RelativeLayout>

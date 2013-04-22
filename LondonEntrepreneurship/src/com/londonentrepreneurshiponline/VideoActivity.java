@@ -1,22 +1,31 @@
 package com.londonentrepreneurshiponline;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.londonentrepreneurshiponline.annotate.AnnotateTextActivity;
+import com.londonentrepreneurshiponline.annotate.annotateList;
+import com.londonentrepreneurshiponline.models.Annotation;
 import com.londonentrepreneurshiponline.models.Video;
 
 public class VideoActivity extends FragmentActivity {
 
 	private Video video;
-
+	private VideoView vv;
+	private int videoPos = 0;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,6 +49,11 @@ public class VideoActivity extends FragmentActivity {
 			title.setText(video.getTitle());
 			desc.setText(video.getDesc());
 		}
+		
+		FragmentManager fm = getSupportFragmentManager();
+		VideoFragment f = (VideoFragment) fm.findFragmentById(R.id.fragment1);
+		vv = f.vv;
+		
 	}
 
 	@Override
@@ -50,12 +64,22 @@ public class VideoActivity extends FragmentActivity {
 	}
 
 	public void annotateText(View v) {
-		Intent intent = new Intent(this, AnnotateTextActivity.class);
+		
 		if (((MainApplication) getApplication()).getLoggedOnUser() != -1)
-			startActivity(intent);
+			startAnnotateText();
 		else
+		{
+			videoPos = vv.getCurrentPosition();
 			startActivityForResult(new Intent(this, Login.class), 1);
+		}
 	}
+    
+	public void annotationList(View v){
+	    Intent myIntent = new Intent(VideoActivity.this, annotateList.class);
+		myIntent.putExtra("Id", video.getId());
+		startActivity(myIntent);	
+	}
+	
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -63,11 +87,24 @@ public class VideoActivity extends FragmentActivity {
 		if (requestCode == 1) // annotate Text
 		{
 			if (resultCode == RESULT_OK) {
-				startActivity(new Intent(this, AnnotateTextActivity.class));
+				startAnnotateText();
 			}
 		}
 	}
+	
+	private void startAnnotateText()
+	{
+		Intent intent = new Intent(this, AnnotateTextActivity.class);
+		if(vv.getCurrentPosition() != 0)
+			intent.putExtra("pos", vv.getCurrentPosition());
+		else
+			intent.putExtra("pos", videoPos);
+		intent.putExtra("videoId", video.getId());
+		startActivity(intent);
+	}
 
+	
+	
 	public void annotateImpt(View v) {
 	}
 
@@ -76,5 +113,15 @@ public class VideoActivity extends FragmentActivity {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 		outState.putSerializable("video", video);
+		outState.putInt("videoPos", videoPos);
+	}
+	
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+		FragmentManager fm = getSupportFragmentManager();
+		VideoFragment f = (VideoFragment) fm.findFragmentById(R.id.fragment1);
+		f.reReadAnnotations();
 	}
 }

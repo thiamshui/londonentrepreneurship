@@ -27,11 +27,12 @@ import com.londonentrepreneurshiponline.models.Video;
  */
 public class VideoFragment extends Fragment implements OnPreparedListener,OnCompletionListener {
 
-	private VideoView vv;
+	VideoView vv;
 	private SparseArray<String> annotations;
 	private TextView caption;
 	private boolean videoFinished = false;
 	private int prevCaptionTime = 0, lastVideoDuration = 0;
+	private Video vid;
 
 	public VideoFragment() {
 		// Required empty public constructor
@@ -41,10 +42,10 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+
 		if(savedInstanceState != null)
 			lastVideoDuration = savedInstanceState.getInt("videoPos");
-			
+
 	}
 
 	@Override
@@ -54,38 +55,52 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 
 		vv = (VideoView) view.findViewById(R.id.videoView1);
 		caption = (TextView) view.findViewById(R.id.textView1);
-		
+
 		MediaController mc = new MediaController(view.getContext());
 		mc.setMediaPlayer(vv);
 
 		vv.setOnPreparedListener(this);
 		vv.setOnCompletionListener(this);
-		
-		vv.setMediaController(mc);
 
+		vv.setMediaController(mc);
+        
+		
 		Intent myIntent= getActivity().getIntent();
-		Video vid = (Video) myIntent.getSerializableExtra("video");
-		Log.d("test",vid.getDesc());
-		new loadVideoTask().execute(vid.getId());
+		vid = (Video) myIntent.getSerializableExtra("video");
+		
+		Intent secondIntent = getActivity().getIntent();
+		int time = secondIntent.getIntExtra("milliSeconds", 0);
+		int id = secondIntent.getIntExtra("id", -1);
+		
+		if(id != -1){
+			new loadVideoTask().execute(id);
+			vv.setVideoURI(Uri.parse("http://www.londonentrepreneurshiponline.com//stream//yqqgv4v0snfohqsj.mp4"));
+			vv.seekTo(time);
+		}
+		
+		else{
+		   new loadVideoTask().execute(vid.getId());
+		   vv.setVideoURI(Uri.parse(vid.getUri()));	
+		   if(lastVideoDuration != 0)
+			 vv.seekTo(lastVideoDuration);
+		}
+		
+		vv.start();
+
 		return view;
 	}
 
-	protected class loadVideoTask extends AsyncTask<Integer,Void,Video>
-	{
+	protected class loadVideoTask extends AsyncTask<Integer,Void,Void>	{
 		@Override
-		protected Video doInBackground(Integer... params) {
-			Video vid = Video.getVideoById(params[0]);
+		protected Void doInBackground(Integer... params) {
 			annotations = Annotation.getAnnotationsByVideo(params[0]);
-			return vid;
+			return null;
 		}
 
 		@Override
-		protected void onPostExecute(Video result) {
+		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
-			vv.setVideoURI(Uri.parse(result.getUri()));
-			if(lastVideoDuration != 0)
-				vv.seekTo(lastVideoDuration);
-			vv.start();
+
 
 		}
 	}
@@ -97,7 +112,7 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 		Handler handler = new Handler();
 		handler.postDelayed(updateAnnotations, 1000);
 	}
-	
+
 	@Override
 	public void onCompletion(MediaPlayer mp) {
 		// TODO Auto-generated method stub
@@ -115,30 +130,35 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 				caption.setVisibility(View.VISIBLE);
 				prevCaptionTime = currentPos;
 			}
-			
+
 			if(currentPos < prevCaptionTime || currentPos - prevCaptionTime > 5)
 			{
 				caption.setText("");
 				caption.setVisibility(View.INVISIBLE);
 			}
-			
+
 			if(!videoFinished)
 			{
 				new Handler().postDelayed(updateAnnotations, 1000);
 			}
 		}
 	};
-	
+
 	public void captionTouch()
 	{
 		Log.d("test","TOUCH");
 	}
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 		outState.putInt("videoPos",vv.getCurrentPosition());
+	}
+
+	public void reReadAnnotations()
+	{
+		new loadVideoTask().execute(vid.getId());
 	}
 
 }
