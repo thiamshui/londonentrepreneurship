@@ -3,11 +3,14 @@ package com.londonentrepreneurshiponline.annotate;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import com.londonentrepreneurshiponline.MainActivity;
 import com.londonentrepreneurshiponline.R;
 import com.londonentrepreneurshiponline.SearchList;
+import com.londonentrepreneurshiponline.VideoActivity;
 import com.londonentrepreneurshiponline.VideoFragment;
 import com.londonentrepreneurshiponline.models.Annotation;
 import com.londonentrepreneurshiponline.models.Member;
+import com.londonentrepreneurshiponline.models.Video;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -35,13 +38,14 @@ public class annotateList extends Activity implements OnClickListener{
 	private String member[];
 	private ArrayList<Annotation> orderedList;
     private int incomingId;
-
+    private Video video;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState){	
 		super.onCreate(savedInstanceState);
 
-		//incomingId = getIntent().getIntExtra("Id", 1);
-		new loadAnnotationList().execute(11);
+		video = (Video) getIntent().getSerializableExtra("video");
+		new loadAnnotationList().execute(video.getId());
 
 	}
 	
@@ -139,11 +143,10 @@ public class annotateList extends Activity implements OnClickListener{
 	
 	@Override
 	public void onClick(View v) {
-     int time = orderedList.get(v.getId()).getTimeSecs();
-     int id = 11;
-     Intent myIntent = new Intent(this, VideoFragment.class);
-     myIntent.putExtra("milliSeconds", 600);
-     myIntent.putExtra("id", id);
-     startActivity(myIntent);
+//     int time = orderedList.get(v.getId()).getTimeSecs();
+//     Intent myIntent = new Intent(this, VideoFragment.class);
+//     myIntent.putExtra("milliSeconds", time);
+//     myIntent.putExtra("videoFromAnnotation", video);
+//     startActivity(myIntent);
 	}
 }

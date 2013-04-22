@@ -35,6 +35,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+     	
 		setTabLayout();
 		searchBar = (SearchView) findViewById(R.id.searchView1);
 		searchBar.setIconified(false);
@@ -164,7 +165,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 		@Override
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
-			
+			Log.d("test","LENGTH:" + videos.size());
 			for(int i = 0; i <= imageId.length-1; i++){	
 			   ImageView image = (ImageView) findViewById(imageId[i]);
 			   image.setOnClickListener(MainActivity.this);		   

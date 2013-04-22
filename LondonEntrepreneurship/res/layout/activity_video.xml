@@ -8,7 +8,10 @@
         android:id="@+id/fragment1"
         android:name="com.londonentrepreneurshiponline.VideoFragment"
         android:layout_width="match_parent"
-        android:layout_height="184dp" />
+        android:layout_height="184dp"
+        android:layout_above="@+id/imageButton2"
+        android:layout_alignParentTop="true" />
+
     <!--
     VideoView
         android:id="@+id/videoView1"
@@ -66,7 +69,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView2"
         android:layout_toRightOf="@+id/imageButton2"
-        android:text="Heat Map" />
+        android:text="Heat Map"
+        android:onClick="launchHeatMap" />
 
     <Button
         android:id="@+id/button1"

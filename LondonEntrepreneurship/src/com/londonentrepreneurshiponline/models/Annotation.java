@@ -87,6 +87,7 @@ public class Annotation {
 	}
 	
 	public static ArrayList<Annotation> getAnnotationsListByVideo(int id)
+
 	  {
 	    GsonBuilder gsonb = new GsonBuilder();
 	    Gson gson = gsonb.create();
@@ -99,6 +100,7 @@ public class Annotation {
 	    
 	    return annotations;
 	  }
+
 
 	public static String createAnnotation(String text, int timeSecs, int userID, int videoId)
 	{
