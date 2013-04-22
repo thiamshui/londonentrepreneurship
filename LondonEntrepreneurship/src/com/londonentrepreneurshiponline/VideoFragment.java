@@ -43,8 +43,6 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
-		videoFinished = false;
-
 		if(savedInstanceState != null)
 			lastVideoDuration = savedInstanceState.getInt("videoPos");
 
@@ -55,6 +53,7 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_video, container, false);
 
+		videoFinished = false;
 		vv = (VideoView) view.findViewById(R.id.videoView1);
 		caption = (TextView) view.findViewById(R.id.textView1);
 
@@ -70,7 +69,6 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 		Intent myIntent= getActivity().getIntent();
 		vid = (Video) myIntent.getSerializableExtra("video");
 
-		new loadVideoTask().execute(vid.getId());
 		vv.setVideoURI(Uri.parse(vid.getUri()));	
 		if(lastVideoDuration != 0)
 		    vv.seekTo(lastVideoDuration);
@@ -164,6 +162,13 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	public void setVideoFinished()
 	{
 		videoFinished = true;
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		videoFinished = false;
 	}
 
 }
