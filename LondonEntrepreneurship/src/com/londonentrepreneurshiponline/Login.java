@@ -30,7 +30,7 @@ public class Login extends Activity {
 
 		logon = (Button) findViewById(R.id.signin);
 	}
-	
+
 	public void signIn(View v)
 	{
 		EditText passText = (EditText) findViewById(R.id.tpassword);
@@ -39,18 +39,18 @@ public class Login extends Activity {
 		btn.setText("Signing In...");
 		btn.setEnabled(false);
 		new authenticateTask().execute(usernameText.getText().toString(),md5(passText.getText().toString()));
-				
+
 	}
 
 	public String md5(String s) {
-		
+
 		String hash = "";
-		
+
 		try {
 			MessageDigest encryptpass = java.security.MessageDigest
 					.getInstance("MD5");
 			encryptpass.update(s.getBytes(), 0, s.length());
-		
+
 			hash = new BigInteger(1, encryptpass.digest()).toString(16);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -64,16 +64,16 @@ public class Login extends Activity {
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
-	
+
 	protected class authenticateTask extends AsyncTask<String,Void,Member>
 	{
 		@Override
 		protected Member doInBackground(String... params) {
 			Member m = Member.authenticate(params[0],params[1]);
-			
+
 			return m;
 		}
-		
+
 		@Override
 		protected void onPostExecute(Member result) {
 			// TODO Auto-generated method stub
@@ -84,7 +84,7 @@ public class Login extends Activity {
 				Button btn = (Button) findViewById(R.id.signin);
 				btn.setText("SIGN IN");
 				btn.setEnabled(true);
-				
+
 				Animation shake = AnimationUtils.loadAnimation(Login.this, R.anim.shake);
 				findViewById(R.id.tpassword).startAnimation(shake);
 				findViewById(R.id.tusername).startAnimation(shake);
@@ -95,14 +95,14 @@ public class Login extends Activity {
 			else
 			{
 				Toast.makeText(Login.this, "Sign-in Successful", 5000).show();
-				
+
 				((MainApplication) Login.this.getApplication()).setLoggedOnUser(result.getId());
 				setResult(RESULT_OK,new Intent());
 				finish();
 			}
 
 		}
-	
+
 	}
 
 }

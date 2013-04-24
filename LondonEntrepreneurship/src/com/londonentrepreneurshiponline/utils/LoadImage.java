@@ -12,7 +12,7 @@ import android.os.AsyncTask;
 
 public class LoadImage{
 
-	public static Drawable LoadImageFromWebOperations(String url)
+	public static Drawable loadFromServer(String url)
     {
           try{
         InputStream is = (InputStream) new URL(url).getContent();

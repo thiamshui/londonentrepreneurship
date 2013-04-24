@@ -21,7 +21,7 @@ import com.londonentrepreneurshiponline.annotate.annotateList;
 import com.londonentrepreneurshiponline.models.Annotation;
 import com.londonentrepreneurshiponline.models.Video;
 
-public class VideoActivity extends FragmentActivity {
+public class VideoActivity extends FragmentActivity  {
 
 	private Video video;
 	private VideoView vv;

@@ -88,15 +88,9 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()){
 		case R.id.about:
-			Intent i = new Intent("android.intent.action.ABOUT");
+			Intent i = new Intent(this,AboutUs.class);
 			startActivity(i);
-			break;
-		case R.id.help:
-
-			break;
-		case R.id.preferences:
-
-			break;		
+			break;	
 		}
 		return false;
 	}
@@ -157,7 +151,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 			
 			for(int i=0;i<5;i++)
 			{
-				images[i] = LoadImage.LoadImageFromWebOperations(videos.get(i).getThumbnail());
+				images[i] = LoadImage.loadFromServer(videos.get(i).getThumbnail());
 			}
 			return null;
 		}

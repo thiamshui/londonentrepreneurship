@@ -5,14 +5,5 @@
         android:title="About"
         android:id="@+id/about"
     />
-    
-    <item 
-        android:title="Preferences"
-        android:id="@+id/preferences"
-    />
-    <item 
-        android:title="Help"
-        android:id="@+id/help"
-    />
-    
+
 </menu>

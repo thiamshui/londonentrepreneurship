@@ -57,74 +57,78 @@ public class SearchList extends Activity implements View.OnClickListener {
 			videos = Video.searchVideos(query);
 				Drawable[] singleImage = new Drawable[videos.size()];
 				for(int i = 0; i<= videos.size()-1; i++){			
-					singleImage[i] = LoadImage.LoadImageFromWebOperations(videos.get(i).getThumbnail());
+					singleImage[i] = LoadImage.loadFromServer(videos.get(i).getThumbnail());
 				}
 				return singleImage;
 
 		}
 		
 		protected void onPostExecute(Drawable[] singleImage){
-			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-				    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		    params.topMargin=30;
-		    params.leftMargin = 20;
-
-		    LinearLayout.LayoutParams paramsText = new LinearLayout.LayoutParams(
-				    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);		
-		    paramsText.topMargin=20;
-		    paramsText.rightMargin = 20;
-		    paramsText.leftMargin = 10;
-
-			ScrollView sv = new ScrollView(SearchList.this);
-			sv.setLayoutParams(params);
-			LinearLayout ll = new LinearLayout(SearchList.this);	
-			ll.setOrientation(LinearLayout.VERTICAL);
-			
-
-			if(videos.size() == 0){
-				paramsText.gravity = 17;
-				paramsText.topMargin =50;
-			    TextView textview = new TextView(SearchList.this);
-			    textview.setText("No video results found for '" + query + "'");
-			    textview.setLayoutParams(paramsText);
-			    ll.addView(textview);
-			    SearchList.this.setContentView(ll);
-			} 
-			 else {
-				 TextView displayQuery = new TextView(SearchList.this);
-				 displayQuery.setText("Search Results for '" + query + "'");
-				 displayQuery.setLayoutParams(paramsText);
-				 paramsText.gravity =17;
-				 ll.addView(displayQuery);
-				 sv.addView(ll);
-      			for (int i = 0; i <= videos.size() - 1; i++) {
-      				Log.d("here", "now");
-					LinearLayout row = new LinearLayout(SearchList.this);
-					row.setLayoutParams(new LayoutParams(
-					LayoutParams.WRAP_CONTENT,
-					LayoutParams.WRAP_CONTENT));
-
-					rowImages = new ImageView(SearchList.this);
-					rowImages.setId(i);
-					rowImages.setTag(videos.get(i).getThumbnail());
-					rowImages.setImageDrawable(singleImage[i]);
-					rowImages.setLayoutParams(params);
-					rowImages.setOnClickListener(SearchList.this);
-					row.addView(rowImages);
-					
-					TextView textview = new TextView(SearchList.this);
-					textview.setText(videos.get(i).getTitle());
-					textview.setId(i);
-					textview.setLayoutParams(paramsText);
-					textview.setOnClickListener(SearchList.this);
-					row.addView(textview);
-					ll.addView(row);
-					
-					SearchList.this.setContentView(sv);
-				}
-				
+			   assignSearchList(singleImage, query);			
 			}
 		}
+		
+	public void assignSearchList(Drawable[] singleImage,String query){
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+			    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+	    params.topMargin=30;
+	    params.leftMargin = 20;
+
+	    LinearLayout.LayoutParams paramsText = new LinearLayout.LayoutParams(
+			    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);		
+	    paramsText.topMargin=20;
+	    paramsText.rightMargin = 20;
+	    paramsText.leftMargin = 10;
+
+		ScrollView sv = new ScrollView(SearchList.this);
+		sv.setLayoutParams(params);
+		LinearLayout ll = new LinearLayout(SearchList.this);	
+		ll.setOrientation(LinearLayout.VERTICAL);
+		
+
+		if(videos.size() == 0){
+			paramsText.gravity = 17;
+			paramsText.topMargin =50;
+		    TextView textview = new TextView(SearchList.this);
+		    textview.setText("No video results found for '" + query + "'");
+		    textview.setLayoutParams(paramsText);
+		    ll.addView(textview);
+		    SearchList.this.setContentView(ll);
+		} 
+		 else {
+			 TextView displayQuery = new TextView(SearchList.this);
+			 displayQuery.setText("Search Results for '" + query + "'");
+			 displayQuery.setLayoutParams(paramsText);
+			 paramsText.gravity =17;
+			 ll.addView(displayQuery);
+			 sv.addView(ll);
+  			for (int i = 0; i <= videos.size() - 1; i++) {
+  				Log.d("here", "now");
+				LinearLayout row = new LinearLayout(SearchList.this);
+				row.setLayoutParams(new LayoutParams(
+				LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT));
+
+				rowImages = new ImageView(SearchList.this);
+				rowImages.setId(i);
+				rowImages.setTag(videos.get(i).getThumbnail());
+				rowImages.setImageDrawable(singleImage[i]);
+				rowImages.setLayoutParams(params);
+				rowImages.setOnClickListener(SearchList.this);
+				row.addView(rowImages);
+				
+				TextView textview = new TextView(SearchList.this);
+				textview.setText(videos.get(i).getTitle());
+				textview.setId(i);
+				textview.setLayoutParams(paramsText);
+				textview.setOnClickListener(SearchList.this);
+				row.addView(textview);
+				ll.addView(row);
+				
+				SearchList.this.setContentView(sv);
+			}
+		
+	}
 		
 	}
 }	
