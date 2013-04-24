@@ -4,6 +4,7 @@
     android:layout_height="fill_parent"
     tools:context=".VideoActivity" >
 
+    
     <fragment
         android:id="@+id/fragment1"
         android:name="com.londonentrepreneurshiponline.VideoFragment"

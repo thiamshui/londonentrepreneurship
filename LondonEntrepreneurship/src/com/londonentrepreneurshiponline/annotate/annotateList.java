@@ -3,6 +3,7 @@ package com.londonentrepreneurshiponline.annotate;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -14,6 +15,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.londonentrepreneurshiponline.R;
+import com.londonentrepreneurshiponline.VideoActivity;
+import com.londonentrepreneurshiponline.VideoFragment;
 import com.londonentrepreneurshiponline.models.Annotation;
 import com.londonentrepreneurshiponline.models.Member;
 import com.londonentrepreneurshiponline.models.Video;
@@ -129,10 +132,10 @@ public class annotateList extends Activity implements OnClickListener{
 	
 	@Override
 	public void onClick(View v) {
-//     int time = orderedList.get(v.getId()).getTimeSecs();
-//     Intent myIntent = new Intent(this, VideoFragment.class);
-//     myIntent.putExtra("milliSeconds", time);
-//     myIntent.putExtra("videoFromAnnotation", video);
-//     startActivity(myIntent);
+//		int time = orderedList.get(v.getId()).getTimeSecs();
+//		Intent myIntent = new Intent(this, VideoActivity.class);
+//		myIntent.putExtra("milliSeconds", time);
+//		myIntent.putExtra("videoFromAnnotation", video);
+//		startActivity(myIntent);
 	}
 }

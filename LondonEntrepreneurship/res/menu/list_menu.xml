@@ -5,5 +5,9 @@
         android:title="About"
         android:id="@+id/about"
     />
+     <item 
+        android:title="Login"
+        android:id="@+id/Login"
+    />
 
 </menu>

@@ -41,11 +41,10 @@ public class VideoActivity extends FragmentActivity  {
 		{
 			video = (Video) savedInstanceState.getSerializable("video");
 		}
-		
 		setContentView(R.layout.activity_video);
 
-//		int time = getIntent().getIntExtra("milliSeconds", -1);
-//		video = (Video) getIntent().getSerializableExtra("videoFromAnnotation");
+	    int time = getIntent().getIntExtra("milliSeconds", -1);
+		video = (Video) getIntent().getSerializableExtra("videoFromAnnotation");
 			
 		video = (Video) getIntent().getSerializableExtra("video");
 		

@@ -101,7 +101,6 @@ public class Annotation {
 	    return annotations;
 	  }
 
-
 	public static String createAnnotation(String text, int timeSecs, int userID, int videoId)
 	{
 		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();

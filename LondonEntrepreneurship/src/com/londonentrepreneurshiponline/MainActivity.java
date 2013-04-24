@@ -66,7 +66,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
         tabs.setOnTabChangedListener(this);
         tabs.addTab(specs);
        
-        
         specs = tabs.newTabSpec("tag2");
         specs.setIndicator("Latest");
         specs.setContent(R.id.Featured);
@@ -90,7 +89,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 		case R.id.about:
 			Intent i = new Intent(this,AboutUs.class);
 			startActivity(i);
-			break;	
+			break;
+		case R.id.Login:
+			startActivityForResult(new Intent(this, Login.class), 4);
+			break;
 		}
 		return false;
 	}
@@ -129,7 +131,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 
 	@Override
 	public boolean onQueryTextSubmit(String arg0) {
-		Log.d("search",arg0);
 		Intent myIntent = new Intent(this, SearchList.class);
 		myIntent.putExtra("Query", arg0);
 		searchBar.setQuery("", false);
@@ -159,7 +160,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnTa
 		@Override
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
-			Log.d("test","LENGTH:" + videos.size());
 			for(int i = 0; i <= imageId.length-1; i++){	
 			   ImageView image = (ImageView) findViewById(imageId[i]);
 			   image.setOnClickListener(MainActivity.this);		   
