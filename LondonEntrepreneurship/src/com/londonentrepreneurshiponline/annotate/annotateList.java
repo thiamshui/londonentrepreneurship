@@ -1,36 +1,22 @@
 package com.londonentrepreneurshiponline.annotate;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import com.londonentrepreneurshiponline.MainActivity;
-import com.londonentrepreneurshiponline.R;
-import com.londonentrepreneurshiponline.SearchList;
-import com.londonentrepreneurshiponline.VideoActivity;
-import com.londonentrepreneurshiponline.VideoFragment;
-import com.londonentrepreneurshiponline.models.Annotation;
-import com.londonentrepreneurshiponline.models.Member;
-import com.londonentrepreneurshiponline.models.Video;
-
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.londonentrepreneurshiponline.R;
+import com.londonentrepreneurshiponline.models.Annotation;
+import com.londonentrepreneurshiponline.models.Member;
+import com.londonentrepreneurshiponline.models.Video;
 
 
 public class annotateList extends Activity implements OnClickListener{
