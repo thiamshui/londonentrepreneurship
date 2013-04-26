@@ -1,7 +1,5 @@
 package com.londonentrepreneurshiponline;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
@@ -18,7 +16,6 @@ import android.widget.VideoView;
 
 import com.londonentrepreneurshiponline.annotate.AnnotateTextActivity;
 import com.londonentrepreneurshiponline.annotate.annotateList;
-import com.londonentrepreneurshiponline.models.Annotation;
 import com.londonentrepreneurshiponline.models.Video;
 
 public class VideoActivity extends FragmentActivity  {
@@ -43,7 +40,6 @@ public class VideoActivity extends FragmentActivity  {
 		}
 		setContentView(R.layout.activity_video);
 
-	    int time = getIntent().getIntExtra("milliSeconds", -1);
 		video = (Video) getIntent().getSerializableExtra("videoFromAnnotation");
 			
 		video = (Video) getIntent().getSerializableExtra("video");
@@ -59,11 +55,13 @@ public class VideoActivity extends FragmentActivity  {
 		
 		FragmentManager fm = getSupportFragmentManager();
 		fragment = (VideoFragment) fm.findFragmentById(R.id.fragment1);
-		vv = fragment.vv;	
-	}
+		vv = fragment.vv;
 
-	public void retrieveFromAnnotationList(){
-		
+	    /*int time = getIntent().getIntExtra("milliSeconds", -1);
+		if(time != -1)
+	    {
+	    	fragment.setVideoPos(time);
+	    }*/
 	}
 	
 	@Override
@@ -88,6 +86,9 @@ public class VideoActivity extends FragmentActivity  {
 	public void annotationList(View v){
 	    Intent myIntent = new Intent(VideoActivity.this, annotateList.class);
 		myIntent.putExtra("video", video);
+		
+		fragment.setVideoFinished();
+		finish();
 		startActivity(myIntent);	
 	}
 
