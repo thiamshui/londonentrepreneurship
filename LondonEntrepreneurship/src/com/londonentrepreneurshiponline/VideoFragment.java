@@ -37,6 +37,11 @@ public class VideoFragment extends Fragment implements OnPreparedListener,OnComp
 	public VideoFragment() {
 		// Required empty public constructor
 	}
+	
+	public void setVideoPos(int videoPos)
+	{
+		lastVideoDuration = videoPos;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
