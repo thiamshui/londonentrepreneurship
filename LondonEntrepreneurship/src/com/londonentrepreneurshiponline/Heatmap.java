@@ -122,5 +122,12 @@ public class Heatmap extends Activity {
 		getMenuInflater().inflate(R.menu.heatmap, menu);
 		return true;
 	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		finish();
+	}
 
 }
