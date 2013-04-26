@@ -12,13 +12,9 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
@@ -38,7 +34,7 @@ public class Heatmap extends Activity {
         
 	}
 
-	private void openChart(){
+	public void openChart(){
 		Video vid = (Video) getIntent().getSerializableExtra("video");
 		Log.d("test",vid.getDesc());
 		int durationMs = getIntent().getIntExtra("videoDur", -1);
@@ -95,6 +91,11 @@ public class Heatmap extends Activity {
         allclicks.setSelectableBuffer(100);
         Intent intent = ChartFactory.getBarChartIntent(getBaseContext(), dataset, allclicks, Type.DEFAULT);
         startActivity(intent);
+        
+        // this part below was programmed to be able to click on the bars itself
+        // and therefore this would take you straight to that part of the video.
+        // this didn't work out. 
+        
         myChartView = ChartFactory.getBarChartView(this, dataset, allclicks, Type.DEFAULT);
         myChartView.setOnClickListener(new View.OnClickListener() {
 			
@@ -114,8 +115,6 @@ public class Heatmap extends Activity {
 		          }
 			}
 		});
-        //startActivity(intent);
-        //myChartView.repaint();
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
